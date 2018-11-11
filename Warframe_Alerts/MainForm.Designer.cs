@@ -3,7 +3,7 @@ using System.Windows.Forms;
 
 namespace Warframe_Alerts
 {
-    partial class MainWindow
+    partial class MainForm
     {
         /// <summary>
         /// Required designer variable.
@@ -32,7 +32,7 @@ namespace Warframe_Alerts
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainWindow));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             this.Notify_Icon = new System.Windows.Forms.NotifyIcon(this.components);
             this.Menu_Strip = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.Menu_Exit = new System.Windows.Forms.ToolStripMenuItem();
@@ -265,7 +265,7 @@ namespace Warframe_Alerts
             this.CBStartM.UseVisualStyleBackColor = true;
             this.CBStartM.CheckedChanged += new System.EventHandler(this.CBStartM_CheckedChanged);
             // 
-            // MainWindow
+            // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
@@ -282,7 +282,7 @@ namespace Warframe_Alerts
             this.Font = new System.Drawing.Font("Microsoft Sans Serif", 24F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
-            this.Name = "MainWindow";
+            this.Name = "MainForm";
             this.Text = "Warframe Alerts";
             this.Load += new System.EventHandler(this.MainWindow_Load);
             this.Resize += new System.EventHandler(this.Resize_Action);

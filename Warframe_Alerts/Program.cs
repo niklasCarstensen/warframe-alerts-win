@@ -38,7 +38,8 @@ namespace Warframe_Alerts
             SetProcessDPIAware();
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(true);
-            Application.Run(new MainWindow());
+            Global.Main = new MainForm();
+            Application.Run(Global.Main);
         }
 
         [System.Runtime.InteropServices.DllImport("user32.dll")]

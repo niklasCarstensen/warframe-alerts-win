@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.IO;
 using System.Linq;
 using System.Reflection;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -13,16 +14,18 @@ namespace Warframe_Alerts
 {
     public static class Global
     {
+        public static MainForm Main;
         public readonly static string CurrentExecutablePath = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
-        static Random RDMP = new Random();
-        public static Random RDM
-        {
-            get
-            {
-                return RDMP;
-            }
-        }
-        
+        public static Random RDM = new Random();
+
+        public static void Hide(IntPtr WindowHandle) { ShowWindow(WindowHandle, 0); }
+        public static void Minimize(IntPtr WindowHandle) { ShowWindow(WindowHandle, 2); }
+        public static void Show(IntPtr WindowHandle) { ShowWindow(WindowHandle, 5); }
+
+        // Imports
+        [DllImport("user32.dll")]
+        public static extern bool ShowWindow(IntPtr hWnd, int nCmdShow);
+
         // Extensions
         public static List<int> AllIndexesOf(this string str, string value)
         {
@@ -119,6 +122,14 @@ namespace Warframe_Alerts
             {
                 action();
             }
+        }
+        public static void ForceHide(this Form F)
+        {
+            Hide(F.Handle);
+        }
+        public static void ForceShow(this Form F)
+        {
+            Show(F.Handle);
         }
     }
 }

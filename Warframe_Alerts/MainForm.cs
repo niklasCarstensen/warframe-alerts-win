@@ -8,15 +8,17 @@ using MaterialSkin;
 using MaterialSkin.Controls;
 using System.Drawing;
 using System.Diagnostics;
+using System.Threading.Tasks;
+using System.Threading;
 
 namespace Warframe_Alerts
 {
     [SuppressMessage("ReSharper", "PossibleNullReferenceException")]
-    public partial class MainWindow : MaterialForm
+    public partial class MainForm : MaterialForm
     {
         private readonly List<string> _idList = new List<string>();
         
-        private readonly Timer updateTimer = new Timer();
+        private readonly System.Windows.Forms.Timer updateTimer = new System.Windows.Forms.Timer();
         private bool _phaseShift;
 
         public bool GameDetection { get; set; } = true;
@@ -31,7 +33,8 @@ namespace Warframe_Alerts
             set { base.MaximumSize = value; }
         }
 
-        public MainWindow()
+        // Startup
+        public MainForm()
         {
             InitializeComponent();
 
@@ -53,8 +56,12 @@ namespace Warframe_Alerts
             updateTimer.Interval = config.Data.UpdateInterval;
             updateTimer.Tick += Update_Click;
             updateTimer.Start();
-        }
 
+            if (config.Data.startMinimized)
+                Task.Factory.StartNew(() => { this.InvokeIfRequired(() => { HideForm(); }); });
+        }
+        
+        // Update
         public void WF_Update()
         {
             var wf = new WarframeHandler();
@@ -303,7 +310,7 @@ namespace Warframe_Alerts
         }
         private void CBLog_CheckedChanged(object sender, EventArgs e)
         {
-            config.Data.startMinimized = CBLog.Checked;
+            config.Data.enableLog = CBLog.Checked;
             config.Save();
         }
         private void CBStartM_CheckedChanged(object sender, EventArgs e)
@@ -313,27 +320,15 @@ namespace Warframe_Alerts
         }
         private void Resize_Action(object sender, EventArgs e)
         {
-            if (WindowState != FormWindowState.Minimized || _phaseShift) return;
-            Hide();
-            Opacity = 0;
-            Notify_Icon.BalloonTipText = @"Warframe_Alerts is running in background";
-            Notify_Icon.BalloonTipTitle = @"Update";
-            if (config.Data.startMinimized) return;
-            Notify_Icon.ShowBalloonTip(2000);
+            if (WindowState == FormWindowState.Minimized && !_phaseShift)
+                HideForm();
         }
         private void Notification_Icon_Double_Click(object sender, EventArgs e)
         {
-            if (WindowState != FormWindowState.Minimized) return;
-            _phaseShift = true;
-            ShowInTaskbar = true;
-            Opacity = 100;
-            Show();
-            WindowState = FormWindowState.Normal;
-            FormBorderStyle = FormBorderStyle.None;
-            BringToFront();
-            _phaseShift = false;
+            this.InvokeIfRequired(() => { ShowForm(); });
         }
 
+        // Log
         public void Log_Alert(string id, string disc)
         {
             var flag = true;
@@ -373,6 +368,7 @@ namespace Warframe_Alerts
             }
         }
         
+        // Other
         private static bool DetectWarframe()
         {
             var flag = false;
@@ -388,6 +384,24 @@ namespace Warframe_Alerts
             }
 
             return flag;
+        }
+        private void HideForm()
+        {
+            _phaseShift = true;
+            this.ForceHide();
+
+            Notify_Icon.BalloonTipText = @"Warframe_Alerts is running in background";
+            Notify_Icon.BalloonTipTitle = @"Update";
+            if (!config.Data.startMinimized)
+                Notify_Icon.ShowBalloonTip(2000);
+            _phaseShift = false;
+        }
+        private void ShowForm()
+        {
+            _phaseShift = true;
+            this.ForceShow();
+            WindowState = FormWindowState.Normal;
+            _phaseShift = false;
         }
     }
 }

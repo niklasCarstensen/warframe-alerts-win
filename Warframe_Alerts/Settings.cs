@@ -5,10 +5,10 @@ namespace Warframe_Alerts
 {
     public partial class Settings : Form
     {
-        private readonly MainWindow parent;
+        private readonly MainForm parent;
         private string[] recommendedFilters = new string[] { "(Blueprint)", "Catalyst", "Reactor", "cr", "ENDO", "Nitain" };
 
-        public Settings(MainWindow mw)
+        public Settings(MainForm mw)
         {
             parent = mw;
             InitializeComponent();

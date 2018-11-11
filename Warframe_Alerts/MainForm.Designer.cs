@@ -86,7 +86,7 @@ namespace Warframe_Alerts
             this.columnHeader6,
             this.columnHeader7});
             this.InvasionData.Depth = 0;
-            this.InvasionData.Font = new System.Drawing.Font("Roboto", 32F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.World);
+            this.InvasionData.Font = new System.Drawing.Font("Microsoft Sans Serif", 24F);
             this.InvasionData.FullRowSelect = true;
             this.InvasionData.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable;
             this.InvasionData.Location = new System.Drawing.Point(12, 299);
@@ -174,7 +174,7 @@ namespace Warframe_Alerts
             this.columnHeader3,
             this.columnHeader4});
             this.AlertData.Depth = 0;
-            this.AlertData.Font = new System.Drawing.Font("Roboto", 32F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.World);
+            this.AlertData.Font = new System.Drawing.Font("Microsoft Sans Serif", 24F);
             this.AlertData.FullRowSelect = true;
             this.AlertData.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable;
             this.AlertData.Location = new System.Drawing.Point(12, 96);
@@ -279,7 +279,7 @@ namespace Warframe_Alerts
             this.Controls.Add(this.MBtnUpdate);
             this.Controls.Add(this.MBtnSettings);
             this.Controls.Add(this.InvasionData);
-            this.Font = new System.Drawing.Font("Roboto Light", 24F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.Font = new System.Drawing.Font("Microsoft Sans Serif", 24F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
             this.Name = "MainWindow";

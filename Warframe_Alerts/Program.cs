@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Diagnostics;
+using System.Threading;
 using System.Windows.Forms;
 
 namespace Warframe_Alerts
@@ -35,6 +37,15 @@ namespace Warframe_Alerts
         [STAThread]
         static void Main()
         {
+            #region Check for other program instances
+            try
+            {
+                foreach (Process p in Process.GetProcessesByName(Process.GetCurrentProcess().ProcessName))
+                    if (p.Id != Process.GetCurrentProcess().Id && p.MainModule.FileName == Process.GetCurrentProcess().MainModule.FileName)
+                        return;
+            } catch { return; }
+            #endregion
+
             SetProcessDPIAware();
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(true);

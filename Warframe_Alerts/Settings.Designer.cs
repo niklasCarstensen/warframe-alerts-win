@@ -41,6 +41,7 @@ namespace Warframe_Alerts
             this.label2 = new System.Windows.Forms.Label();
             this.setButton = new System.Windows.Forms.Button();
             this.removeFilter = new System.Windows.Forms.Button();
+            this.label3 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -107,7 +108,7 @@ namespace Warframe_Alerts
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(9, 42);
+            this.label2.Location = new System.Drawing.Point(12, 40);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(114, 13);
             this.label2.TabIndex = 7;
@@ -135,11 +136,22 @@ namespace Warframe_Alerts
             this.removeFilter.UseVisualStyleBackColor = true;
             this.removeFilter.Click += new System.EventHandler(this.removeFilter_Click);
             // 
+            // label3
+            // 
+            this.label3.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(402, 40);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(171, 13);
+            this.label3.TabIndex = 10;
+            this.label3.Text = "Add a - in front of a filter to ignore it";
+            // 
             // Settings
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(585, 289);
+            this.Controls.Add(this.label3);
             this.Controls.Add(this.removeFilter);
             this.Controls.Add(this.comboBox1);
             this.Controls.Add(this.setButton);
@@ -174,5 +186,6 @@ namespace Warframe_Alerts
         private Button setButton;
         private DataGridViewTextBoxColumn Filter;
         private Button removeFilter;
+        private Label label3;
     }
 }

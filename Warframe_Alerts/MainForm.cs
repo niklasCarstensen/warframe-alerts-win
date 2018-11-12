@@ -51,6 +51,7 @@ namespace Warframe_Alerts
         }
         private void MainWindow_Load(object sender, EventArgs e)
         {
+            Global.UpdateFilters();
             WF_Update();
 
             updateTimer.Interval = config.Data.UpdateInterval;
@@ -286,7 +287,7 @@ namespace Warframe_Alerts
         {
             if (config.Data.Filters.Count == 0)
                 return true;
-            return title.ContainsOneOf(config.Data.Filters);
+            return title.ContainsOneOf(Global.Filters) && !title.ContainsOneOf(Global.Ignorers);
         }
 
         // Forms Events

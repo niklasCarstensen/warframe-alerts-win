@@ -6,7 +6,7 @@ namespace Warframe_Alerts
     public partial class Settings : Form
     {
         private readonly MainForm parent;
-        private string[] recommendedFilters = new string[] { "(Blueprint)", "Catalyst", "Reactor", "cr", "ENDO", "Nitain" };
+        private string[] recommendedFilters = new string[] { "(Blueprint)", "Catalyst", "Reactor", "cr", "ENDO", "Nitain", "Tellurium", "-Vauban" };
 
         public Settings(MainForm mw)
         {
@@ -88,6 +88,7 @@ namespace Warframe_Alerts
             foreach (string s in recommendedFilters)
                 if (!comboBox1.Items.Contains(s))
                     comboBox1.Items.Add(s);
+            Global.UpdateFilters();
         }
     }
 }

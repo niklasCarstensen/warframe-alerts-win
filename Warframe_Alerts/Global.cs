@@ -17,6 +17,14 @@ namespace Warframe_Alerts
         public static MainForm Main;
         public readonly static string CurrentExecutablePath = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
         public static Random RDM = new Random();
+        public static List<string> Filters;
+        public static List<string> Ignorers;
+
+        public static void UpdateFilters()
+        {
+            Filters = config.Data.Filters.Where(x => !x.StartsWith("-")).ToList();
+            Ignorers = config.Data.Filters.Where(x => x.StartsWith("-")).Select(x => x.Remove(0, 1)).ToList();
+        }
 
         public static void Hide(IntPtr WindowHandle) { ShowWindow(WindowHandle, 0); }
         public static void Minimize(IntPtr WindowHandle) { ShowWindow(WindowHandle, 2); }

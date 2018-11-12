@@ -47,19 +47,19 @@ namespace Warframe_Alerts
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(9, 9);
+            this.label1.Location = new System.Drawing.Point(9, 17);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(160, 13);
+            this.label1.Size = new System.Drawing.Size(204, 13);
             this.label1.TabIndex = 0;
-            this.label1.Text = "Set Update Interval (In Minutes):";
+            this.label1.Text = "Set Update Interval (Currently: 5 Minutes):";
             // 
             // textBoxInterval
             // 
             this.textBoxInterval.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.textBoxInterval.Location = new System.Drawing.Point(175, 6);
+            this.textBoxInterval.Location = new System.Drawing.Point(219, 14);
             this.textBoxInterval.Name = "textBoxInterval";
-            this.textBoxInterval.Size = new System.Drawing.Size(301, 20);
+            this.textBoxInterval.Size = new System.Drawing.Size(257, 20);
             this.textBoxInterval.TabIndex = 1;
             // 
             // dataGridView1
@@ -70,9 +70,9 @@ namespace Warframe_Alerts
             this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridView1.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.Filter});
-            this.dataGridView1.Location = new System.Drawing.Point(12, 79);
+            this.dataGridView1.Location = new System.Drawing.Point(12, 85);
             this.dataGridView1.Name = "dataGridView1";
-            this.dataGridView1.Size = new System.Drawing.Size(561, 182);
+            this.dataGridView1.Size = new System.Drawing.Size(561, 192);
             this.dataGridView1.TabIndex = 4;
             // 
             // Filter
@@ -88,7 +88,7 @@ namespace Warframe_Alerts
             this.comboBox1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.comboBox1.FormattingEnabled = true;
-            this.comboBox1.Location = new System.Drawing.Point(12, 52);
+            this.comboBox1.Location = new System.Drawing.Point(12, 58);
             this.comboBox1.Name = "comboBox1";
             this.comboBox1.Size = new System.Drawing.Size(367, 21);
             this.comboBox1.TabIndex = 5;
@@ -96,7 +96,7 @@ namespace Warframe_Alerts
             // addFilter
             // 
             this.addFilter.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.addFilter.Location = new System.Drawing.Point(385, 50);
+            this.addFilter.Location = new System.Drawing.Point(385, 56);
             this.addFilter.Name = "addFilter";
             this.addFilter.Size = new System.Drawing.Size(91, 23);
             this.addFilter.TabIndex = 6;
@@ -107,7 +107,7 @@ namespace Warframe_Alerts
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(9, 36);
+            this.label2.Location = new System.Drawing.Point(9, 42);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(114, 13);
             this.label2.TabIndex = 7;
@@ -116,7 +116,7 @@ namespace Warframe_Alerts
             // setButton
             // 
             this.setButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.setButton.Location = new System.Drawing.Point(482, 4);
+            this.setButton.Location = new System.Drawing.Point(482, 12);
             this.setButton.Name = "setButton";
             this.setButton.Size = new System.Drawing.Size(91, 23);
             this.setButton.TabIndex = 8;
@@ -127,7 +127,7 @@ namespace Warframe_Alerts
             // removeFilter
             // 
             this.removeFilter.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.removeFilter.Location = new System.Drawing.Point(482, 50);
+            this.removeFilter.Location = new System.Drawing.Point(482, 56);
             this.removeFilter.Name = "removeFilter";
             this.removeFilter.Size = new System.Drawing.Size(91, 23);
             this.removeFilter.TabIndex = 9;
@@ -139,7 +139,7 @@ namespace Warframe_Alerts
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(585, 273);
+            this.ClientSize = new System.Drawing.Size(585, 289);
             this.Controls.Add(this.removeFilter);
             this.Controls.Add(this.comboBox1);
             this.Controls.Add(this.setButton);

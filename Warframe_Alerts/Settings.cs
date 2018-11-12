@@ -13,6 +13,7 @@ namespace Warframe_Alerts
             parent = mw;
             InitializeComponent();
             textBoxInterval.Text = (config.Data.UpdateInterval / (60 * 1000)).ToString();
+            setButton_Click(this, EventArgs.Empty);
         }
         private void Settings_Load(object sender, EventArgs e)
         {
@@ -69,6 +70,10 @@ namespace Warframe_Alerts
 
             config.Data.UpdateInterval = inputToInt * 60 * 1000;
             config.Save();
+
+            label1.Text = "Set Update Interval (Currently: " + (config.Data.UpdateInterval / 60 / 1000) + " Minutes):";
+            textBoxInterval.Location = new System.Drawing.Point(label1.Location.X + label1.Width + 6, textBoxInterval.Location.Y);
+            textBoxInterval.Width = setButton.Location.X - textBoxInterval.Location.X - 6;
         }
 
         private void UpdateFilters()

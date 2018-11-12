@@ -52,6 +52,7 @@ namespace Warframe_Alerts
             this.materialLabel2 = new MaterialSkin.Controls.MaterialLabel();
             this.CBLog = new MaterialSkin.Controls.MaterialCheckBox();
             this.CBStartM = new MaterialSkin.Controls.MaterialCheckBox();
+            this.minButton = new MaterialSkin.Controls.MaterialFlatButton();
             this.Menu_Strip.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -120,7 +121,7 @@ namespace Warframe_Alerts
             this.MBtnSettings.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.MBtnSettings.Depth = 0;
             this.MBtnSettings.Icon = null;
-            this.MBtnSettings.Location = new System.Drawing.Point(783, 478);
+            this.MBtnSettings.Location = new System.Drawing.Point(751, 478);
             this.MBtnSettings.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
             this.MBtnSettings.MouseState = MaterialSkin.MouseState.HOVER;
             this.MBtnSettings.Name = "MBtnSettings";
@@ -137,7 +138,7 @@ namespace Warframe_Alerts
             this.MBtnUpdate.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.MBtnUpdate.Depth = 0;
             this.MBtnUpdate.Icon = null;
-            this.MBtnUpdate.Location = new System.Drawing.Point(876, 478);
+            this.MBtnUpdate.Location = new System.Drawing.Point(844, 478);
             this.MBtnUpdate.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
             this.MBtnUpdate.MouseState = MaterialSkin.MouseState.HOVER;
             this.MBtnUpdate.Name = "MBtnUpdate";
@@ -154,7 +155,7 @@ namespace Warframe_Alerts
             this.MBtnExit.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.MBtnExit.Depth = 0;
             this.MBtnExit.Icon = null;
-            this.MBtnExit.Location = new System.Drawing.Point(957, 478);
+            this.MBtnExit.Location = new System.Drawing.Point(693, 478);
             this.MBtnExit.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
             this.MBtnExit.MouseState = MaterialSkin.MouseState.HOVER;
             this.MBtnExit.Name = "MBtnExit";
@@ -265,11 +266,29 @@ namespace Warframe_Alerts
             this.CBStartM.UseVisualStyleBackColor = true;
             this.CBStartM.CheckedChanged += new System.EventHandler(this.CBStartM_CheckedChanged);
             // 
+            // minButton
+            // 
+            this.minButton.AutoSize = true;
+            this.minButton.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.minButton.Depth = 0;
+            this.minButton.Icon = null;
+            this.minButton.Location = new System.Drawing.Point(925, 478);
+            this.minButton.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
+            this.minButton.MouseState = MaterialSkin.MouseState.HOVER;
+            this.minButton.Name = "minButton";
+            this.minButton.Primary = false;
+            this.minButton.Size = new System.Drawing.Size(82, 36);
+            this.minButton.TabIndex = 22;
+            this.minButton.Text = "Minimize";
+            this.minButton.UseVisualStyleBackColor = true;
+            this.minButton.Click += new System.EventHandler(this.minButton_Click);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
             this.ClientSize = new System.Drawing.Size(1020, 530);
+            this.Controls.Add(this.minButton);
             this.Controls.Add(this.CBStartM);
             this.Controls.Add(this.CBLog);
             this.Controls.Add(this.materialLabel2);
@@ -312,6 +331,7 @@ namespace Warframe_Alerts
         private MaterialSkin.Controls.MaterialLabel materialLabel2;
         private MaterialSkin.Controls.MaterialCheckBox CBLog;
         private MaterialSkin.Controls.MaterialCheckBox CBStartM;
+        private MaterialSkin.Controls.MaterialFlatButton minButton;
     }
 }
 

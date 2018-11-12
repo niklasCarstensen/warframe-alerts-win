@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Diagnostics;
+using System.Linq;
 using System.Threading;
 using System.Windows.Forms;
 
@@ -41,7 +42,7 @@ namespace Warframe_Alerts
             try
             {
                 foreach (Process p in Process.GetProcessesByName(Process.GetCurrentProcess().ProcessName))
-                    if (p.Id != Process.GetCurrentProcess().Id && p.MainModule.FileName == Process.GetCurrentProcess().MainModule.FileName)
+                    if (p.Id != Process.GetCurrentProcess().Id)
                         return;
             } catch { return; }
             #endregion

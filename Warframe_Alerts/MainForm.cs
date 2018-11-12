@@ -327,6 +327,10 @@ namespace Warframe_Alerts
         {
             this.InvokeIfRequired(() => { ShowForm(); });
         }
+        private void minButton_Click(object sender, EventArgs e)
+        {
+            HideForm();
+        }
 
         // Log
         public void Log_Alert(string id, string disc)

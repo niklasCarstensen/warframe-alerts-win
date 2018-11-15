@@ -108,7 +108,7 @@ namespace Warframe_Alerts
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(12, 40);
+            this.label2.Location = new System.Drawing.Point(9, 40);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(114, 13);
             this.label2.TabIndex = 7;
@@ -140,7 +140,7 @@ namespace Warframe_Alerts
             // 
             this.label3.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(402, 40);
+            this.label3.Location = new System.Drawing.Point(382, 40);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(171, 13);
             this.label3.TabIndex = 10;

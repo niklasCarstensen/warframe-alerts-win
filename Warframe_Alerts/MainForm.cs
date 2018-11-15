@@ -16,10 +16,9 @@ namespace Warframe_Alerts
     [SuppressMessage("ReSharper", "PossibleNullReferenceException")]
     public partial class MainForm : MaterialForm
     {
-        private readonly List<string> _idList = new List<string>();
-        
+        private readonly List<string> idList = new List<string>();
         private readonly System.Windows.Forms.Timer updateTimer = new System.Windows.Forms.Timer();
-        private bool _phaseShift;
+        private bool phaseShift;
 
         public bool GameDetection { get; set; } = true;
         public sealed override Size MinimumSize
@@ -52,7 +51,7 @@ namespace Warframe_Alerts
         private void MainWindow_Load(object sender, EventArgs e)
         {
             Global.UpdateFilters();
-            WF_Update();
+            WFupdate();
 
             updateTimer.Interval = config.Data.UpdateInterval;
             updateTimer.Tick += Update_Click;
@@ -63,7 +62,7 @@ namespace Warframe_Alerts
         }
         
         // Update
-        public void WF_Update()
+        public void WFupdate()
         {
             var wf = new WarframeHandler();
 
@@ -91,19 +90,19 @@ namespace Warframe_Alerts
             {
                 if (!DetectWarframe())
                 {
-                    Notify_Alerts_And_Invasions(ref alerts, ref invasions, ref outbreaks);
+                    NotifyAlertsAndInvasions(ref alerts, ref invasions, ref outbreaks);
                 }
             }
             else
             {
-                Notify_Alerts_And_Invasions(ref alerts, ref invasions, ref outbreaks);
+                NotifyAlertsAndInvasions(ref alerts, ref invasions, ref outbreaks);
             }
 
             Invoke(new Action(() =>
             {
                 AlertData.Items.Clear();
                 InvasionData.Items.Clear();
-                _idList.Clear();
+                idList.Clear();
             }));
 
             // Display alerts and invasions that are about to run out first
@@ -149,7 +148,7 @@ namespace Warframe_Alerts
 
                 aLeft = aLeft + aSpan.Seconds + " Seconds Left";
 
-                _idList.Add(aId);
+                idList.Add(aId);
                 string[] row = { description, tempTitle, faction, aLeft };
                 var listViewItem = new ListViewItem(row);
                 Invoke(new Action(() => AlertData.Items.Add(listViewItem)));
@@ -173,7 +172,7 @@ namespace Warframe_Alerts
 
                 time = time + span.Minutes + " Minutes Ago";
 
-                _idList.Add(invId);
+                idList.Add(invId);
                 string[] row = { title, "Invasion", time };
                 var listViewItem = new ListViewItem(row);
                 Invoke(new Action(() => InvasionData.Items.Add(listViewItem)));
@@ -197,7 +196,7 @@ namespace Warframe_Alerts
 
                 oTime = oTime + oSpan.Minutes + " Minutes Ago";
 
-                _idList.Add(oId);
+                idList.Add(oId);
                 string[] row = { title, "Outbreak", oTime };
                 var listViewItem = new ListViewItem(row);
                 Invoke(new Action(() => InvasionData.Items.Add(listViewItem)));
@@ -211,79 +210,56 @@ namespace Warframe_Alerts
                 AlertData.Columns[3].Width = AlertData.Items.Count > 3 ? 235 : 252;
             }));
         }
-        public void Notify_Alerts_And_Invasions(ref List<Alert> a, ref List<Invasion> I, ref List<Outbreak> o)
+        public void NotifyAlertsAndInvasions(ref List<Alert> a, ref List<Invasion> i, ref List<Outbreak> o)
         {
-            var notificationMessage = "";
+            string notificationMessage = "";
 
-            for (var i = 0; i < a.Count; i++)
+            for (int j = 0; j < a.Count; j++)
             {
-                var found = false;
+                if (idList.Contains(a[j].ID))
+                    return;
 
-                for (var j = 0; j < _idList.Count && !found; j++)
-                {
-                    if (a[i].ID == _idList[j])
-                    {
-                        found = true;
-                    }
-                }
+                if (config.Data.enableLog)
+                    LogAlert(a[j].ID, a[j].Title);
 
-                if (found) continue;
-                if (config.Data.enableLog) Log_Alert(a[i].ID, a[i].Title);
-
-                if (Filter_Alerts(a[i].Title))
-                {
-                    notificationMessage = notificationMessage + a[i].Title + '\n';
-                }
+                if (FilterAlerts(a[j].Title))
+                    notificationMessage = notificationMessage + a[j].Title + '\n';
             }
 
-            for (var i = 0; i < I.Count; i++)
+            for (int j = 0; j < i.Count; j++)
             {
-                var found = false;
+                if (idList.Contains(i[j].ID))
+                    return;
 
-                for (var j = 0; j < _idList.Count && !found; j++)
-                {
-                    if (I[i].ID == _idList[j])
-                    {
-                        found = true;
-                    }
-                }
+                if (config.Data.enableLog)
+                    LogInvasion(i[j].ID, i[j].Title);
 
-                if (found) continue;
-                if (config.Data.enableLog) Log_Invasion(I[i].ID, I[i].Title);
-
-                if (Filter_Alerts(I[i].Title))
-                {
-                    notificationMessage = notificationMessage + I[i].Title + '\n';
-                }
+                if (FilterAlerts(i[j].Title))
+                    notificationMessage = notificationMessage + i[j].Title + '\n';
             }
 
-            for (var i = 0; i < o.Count; i++)
+            for (int j = 0; j < o.Count; j++)
             {
-                var found = false;
+                if (idList.Contains(o[j].ID))
+                    return;
 
-                for (var j = 0; j < _idList.Count && !found; j++)
-                {
-                    if (o[i].ID == _idList[j])
-                    {
-                        found = true;
-                    }
-                }
+                if (config.Data.enableLog)
+                    LogInvasion(o[j].ID, o[j].Title);
 
-                if (found) continue;
-                if (config.Data.enableLog) Log_Invasion(o[i].ID, o[i].Title);
-
-                if (Filter_Alerts(o[i].Title))
-                {
-                    notificationMessage = notificationMessage + o[i].Title + '\n';
-                }
+                if (FilterAlerts(o[j].Title))
+                    notificationMessage = notificationMessage + o[j].Title + '\n';
             }
 
-            if (notificationMessage == "") return;
-            Notify_Icon.BalloonTipText = notificationMessage;
-            Notify_Icon.BalloonTipTitle = @"Update";
-            Notify_Icon.ShowBalloonTip(2000);
+            if (notificationMessage != "")
+                Notify("Update", notificationMessage, 1000);
         }
-        private bool Filter_Alerts(string title)
+        void Notify(string title, string text, int timeout)
+        {
+            Notify_Icon.BalloonTipText = text;
+            Notify_Icon.BalloonTipTitle = title;
+            Notify_Icon.ShowBalloonTip(timeout);
+        }
+        private bool FilterAlerts(string title)
         {
             if (config.Data.Filters.Count == 0)
                 return true;
@@ -293,7 +269,7 @@ namespace Warframe_Alerts
         // Forms Events
         private void Update_Click(object sender, EventArgs e)
         {
-            Action update = WF_Update;
+            Action update = WFupdate;
             update.BeginInvoke(ar => update.EndInvoke(ar), null);
         }
         private void Exit_Click(object sender, EventArgs e)
@@ -321,7 +297,7 @@ namespace Warframe_Alerts
         }
         private void Resize_Action(object sender, EventArgs e)
         {
-            if (WindowState == FormWindowState.Minimized && !_phaseShift)
+            if (WindowState == FormWindowState.Minimized && !phaseShift)
                 HideForm();
         }
         private void Notification_Icon_Double_Click(object sender, EventArgs e)
@@ -334,7 +310,7 @@ namespace Warframe_Alerts
         }
 
         // Log
-        public void Log_Alert(string id, string disc)
+        public void LogAlert(string id, string disc)
         {
             var flag = true;
 
@@ -353,7 +329,7 @@ namespace Warframe_Alerts
                 File.AppendAllText("AlertLog.txt", id + '\t' + disc + Environment.NewLine);
             }
         }
-        public void Log_Invasion(string id, string disc)
+        public void LogInvasion(string id, string disc)
         {
             var flag = true;
 
@@ -392,21 +368,21 @@ namespace Warframe_Alerts
         }
         private void HideForm()
         {
-            _phaseShift = true;
+            phaseShift = true;
             this.ForceHide();
 
             Notify_Icon.BalloonTipText = @"Warframe_Alerts is running in background";
             Notify_Icon.BalloonTipTitle = @"Update";
             if (!config.Data.startMinimized)
                 Notify_Icon.ShowBalloonTip(2000);
-            _phaseShift = false;
+            phaseShift = false;
         }
         private void ShowForm()
         {
-            _phaseShift = true;
+            phaseShift = true;
             this.ForceShow();
             WindowState = FormWindowState.Normal;
-            _phaseShift = false;
+            phaseShift = false;
         }
     }
 }

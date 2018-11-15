@@ -22,7 +22,7 @@ namespace Warframe_Alerts
 
         private void Settings_FormClosing(object sender, FormClosingEventArgs e)
         {
-            parent.InvokeIfRequired(() => { parent.WF_Update(); });
+            parent.InvokeIfRequired(() => { parent.WFupdate(); });
         }
 
         private void addFilter_Click(object sender, EventArgs e)

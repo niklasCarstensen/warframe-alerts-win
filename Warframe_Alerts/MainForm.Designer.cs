@@ -53,6 +53,7 @@ namespace Warframe_Alerts
             this.CBLog = new MaterialSkin.Controls.MaterialCheckBox();
             this.CBStartM = new MaterialSkin.Controls.MaterialCheckBox();
             this.minButton = new MaterialSkin.Controls.MaterialFlatButton();
+            this.CBNoti = new MaterialSkin.Controls.MaterialCheckBox();
             this.Menu_Strip.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -283,11 +284,28 @@ namespace Warframe_Alerts
             this.minButton.UseVisualStyleBackColor = true;
             this.minButton.Click += new System.EventHandler(this.minButton_Click);
             // 
+            // CBNoti
+            // 
+            this.CBNoti.Depth = 0;
+            this.CBNoti.Font = new System.Drawing.Font("Roboto", 10F);
+            this.CBNoti.Location = new System.Drawing.Point(243, 478);
+            this.CBNoti.Margin = new System.Windows.Forms.Padding(0);
+            this.CBNoti.MouseLocation = new System.Drawing.Point(-1, -1);
+            this.CBNoti.MouseState = MaterialSkin.MouseState.HOVER;
+            this.CBNoti.Name = "CBNoti";
+            this.CBNoti.Ripple = true;
+            this.CBNoti.Size = new System.Drawing.Size(211, 36);
+            this.CBNoti.TabIndex = 23;
+            this.CBNoti.Text = "DESKTOP NOTIFICATIONS";
+            this.CBNoti.UseVisualStyleBackColor = true;
+            this.CBNoti.CheckedChanged += new System.EventHandler(this.CBNoti_CheckedChanged);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
             this.ClientSize = new System.Drawing.Size(1020, 530);
+            this.Controls.Add(this.CBNoti);
             this.Controls.Add(this.minButton);
             this.Controls.Add(this.CBStartM);
             this.Controls.Add(this.CBLog);
@@ -332,6 +350,7 @@ namespace Warframe_Alerts
         private MaterialSkin.Controls.MaterialCheckBox CBLog;
         private MaterialSkin.Controls.MaterialCheckBox CBStartM;
         private MaterialSkin.Controls.MaterialFlatButton minButton;
+        private MaterialSkin.Controls.MaterialCheckBox CBNoti;
     }
 }
 

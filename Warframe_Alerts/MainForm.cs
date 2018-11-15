@@ -48,6 +48,7 @@ namespace Warframe_Alerts
 
             CBLog.Checked = config.Data.enableLog;
             CBStartM.Checked = config.Data.startMinimized;
+            CBNoti.Checked = config.Data.desktopNotifications;
         }
         private void MainWindow_Load(object sender, EventArgs e)
         {
@@ -253,15 +254,18 @@ namespace Warframe_Alerts
         }
         void Notify(string title, string text, int timeout)
         {
-            Notify_Icon.BalloonTipText = text;
-            Notify_Icon.BalloonTipTitle = title;
-            Notify_Icon.BalloonTipClicked += ((object sender, EventArgs e) => {
-                string notifyText = ((NotifyIcon)sender).BalloonTipText;
-                foreach (string s in notifyText.Split('\n'))
-                    if (s.Contains("-"))
-                        Process.Start("https://warframe.fandom.com/wiki/Special:Search?query=" + WebUtility.UrlEncode(s.Split('-')[0].Trim(' ')));
-            });
-            Notify_Icon.ShowBalloonTip(timeout);
+            if (config.Data.desktopNotifications)
+            {
+                Notify_Icon.BalloonTipText = text;
+                Notify_Icon.BalloonTipTitle = title;
+                Notify_Icon.BalloonTipClicked += ((object sender, EventArgs e) => {
+                    string notifyText = ((NotifyIcon)sender).BalloonTipText;
+                    foreach (string s in notifyText.Split('\n'))
+                        if (s.Contains("-"))
+                            Process.Start("https://warframe.fandom.com/wiki/Special:Search?query=" + WebUtility.UrlEncode(s.Split('-')[0].Trim(' ')));
+                });
+                Notify_Icon.ShowBalloonTip(timeout);
+            }
         }
         private bool FilterAlerts(string title)
         {
@@ -289,16 +293,6 @@ namespace Warframe_Alerts
         {
             Application.Exit();
         }
-        private void CBLog_CheckedChanged(object sender, EventArgs e)
-        {
-            config.Data.enableLog = CBLog.Checked;
-            config.Save();
-        }
-        private void CBStartM_CheckedChanged(object sender, EventArgs e)
-        {
-            config.Data.startMinimized = CBStartM.Checked;
-            config.Save();
-        }
         private void Resize_Action(object sender, EventArgs e)
         {
             if (WindowState == FormWindowState.Minimized && !phaseShift)
@@ -311,6 +305,21 @@ namespace Warframe_Alerts
         private void minButton_Click(object sender, EventArgs e)
         {
             HideForm();
+        }
+        private void CBLog_CheckedChanged(object sender, EventArgs e)
+        {
+            config.Data.enableLog = CBLog.Checked;
+            config.Save();
+        }
+        private void CBStartM_CheckedChanged(object sender, EventArgs e)
+        {
+            config.Data.startMinimized = CBStartM.Checked;
+            config.Save();
+        }
+        private void CBNoti_CheckedChanged(object sender, EventArgs e)
+        {
+            config.Data.desktopNotifications = CBNoti.Checked;
+            config.Save();
         }
 
         // Log

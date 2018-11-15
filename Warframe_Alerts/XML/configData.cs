@@ -13,6 +13,7 @@ namespace Warframe_Alerts
         public int UpdateInterval;
         public bool startMinimized;
         public bool enableLog;
+        public bool desktopNotifications;
         public List<string> Filters;
 
         public configData()
@@ -23,6 +24,7 @@ namespace Warframe_Alerts
             startMinimized = false;
             enableLog = false;
             Filters = new List<string>();
+            desktopNotifications = true;
         }
     }
 }

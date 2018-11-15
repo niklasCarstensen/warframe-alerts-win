@@ -56,13 +56,13 @@ namespace Warframe_Alerts
                         temp.ID = item["guid"].InnerText;
                         temp.Title = item["title"].InnerText;
                         temp.Description = item["description"].InnerText;
-                        temp.Start_Date = item["pubDate"].InnerText;
+                        temp.StartDate = item["pubDate"].InnerText;
 
                         var fParse = item["wf:faction"].InnerText.Split('_');
                         var faction = fParse[1].ToLower();
 
                         temp.Faction = faction.Substring(0, 1).ToUpper() + faction.Substring(1, faction.Length - 1);
-                        temp.Expiry_Date = item["wf:expiry"].InnerText;
+                        temp.ExpiryDate = item["wf:expiry"].InnerText;
 
                         alerts.Add(temp);
                     }
@@ -73,7 +73,7 @@ namespace Warframe_Alerts
 
                         temp.ID = item["guid"].InnerText;
                         temp.Title = item["title"].InnerText;
-                        temp.Start_Date = item["pubDate"].InnerText;
+                        temp.StartDate = item["pubDate"].InnerText;
 
                         invasions.Add(temp);
                     }
@@ -84,7 +84,7 @@ namespace Warframe_Alerts
 
                         temp.ID = item["guid"].InnerText;
                         temp.Title = item["title"].InnerText;
-                        temp.Start_Date = item["pubDate"].InnerText;
+                        temp.StartDate = item["pubDate"].InnerText;
 
                         outbreaks.Add(temp);
                     }

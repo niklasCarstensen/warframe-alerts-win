@@ -10,6 +10,7 @@ using System.Drawing;
 using System.Diagnostics;
 using System.Threading.Tasks;
 using System.Threading;
+using System.Net;
 
 namespace Warframe_Alerts
 {
@@ -75,12 +76,9 @@ namespace Warframe_Alerts
 
             if (status != "OK")
             {
-                var message = "Network not responding" + '\n';
-                message = message + response;
-
-                Notify_Icon.BalloonTipText = message;
-                Notify_Icon.BalloonTipTitle = @"Update Failed";
-                Notify_Icon.ShowBalloonTip(2000);
+                string message = "Network not responding\n" + response;
+                
+                Notify("Update Failed", message, 1000);
                 return;
             }
 
@@ -111,7 +109,7 @@ namespace Warframe_Alerts
 
             for (var i = 0; i < alerts.Count; i++)
             {
-                var eTime = Convert.ToDateTime(alerts[i].Expiry_Date);
+                var eTime = Convert.ToDateTime(alerts[i].ExpiryDate);
 
                 var title = alerts[i].Title;
                 var titleSp = title.Split('-');
@@ -159,7 +157,7 @@ namespace Warframe_Alerts
                 var title = invasions[i].Title;
                 var invId = invasions[i].ID;
 
-                var sTime = Convert.ToDateTime(invasions[i].Start_Date);
+                var sTime = Convert.ToDateTime(invasions[i].StartDate);
                 var now = DateTime.Now;
                 var span = now.Subtract(sTime);
 
@@ -183,7 +181,7 @@ namespace Warframe_Alerts
                 var title = outbreaks[i].Title;
                 var oId = outbreaks[i].ID;
 
-                var sTime = Convert.ToDateTime(outbreaks[i].Start_Date);
+                var sTime = Convert.ToDateTime(outbreaks[i].StartDate);
                 var now = DateTime.Now;
                 var oSpan = now.Subtract(sTime);
 
@@ -217,7 +215,7 @@ namespace Warframe_Alerts
             for (int j = 0; j < a.Count; j++)
             {
                 if (idList.Contains(a[j].ID))
-                    return;
+                    continue;
 
                 if (config.Data.enableLog)
                     LogAlert(a[j].ID, a[j].Title);
@@ -229,7 +227,7 @@ namespace Warframe_Alerts
             for (int j = 0; j < i.Count; j++)
             {
                 if (idList.Contains(i[j].ID))
-                    return;
+                    continue;
 
                 if (config.Data.enableLog)
                     LogInvasion(i[j].ID, i[j].Title);
@@ -241,7 +239,7 @@ namespace Warframe_Alerts
             for (int j = 0; j < o.Count; j++)
             {
                 if (idList.Contains(o[j].ID))
-                    return;
+                    continue;
 
                 if (config.Data.enableLog)
                     LogInvasion(o[j].ID, o[j].Title);
@@ -257,6 +255,12 @@ namespace Warframe_Alerts
         {
             Notify_Icon.BalloonTipText = text;
             Notify_Icon.BalloonTipTitle = title;
+            Notify_Icon.BalloonTipClicked += ((object sender, EventArgs e) => {
+                string notifyText = ((NotifyIcon)sender).BalloonTipText;
+                foreach (string s in notifyText.Split('\n'))
+                    if (s.Contains("-"))
+                        Process.Start("https://warframe.fandom.com/wiki/Special:Search?query=" + WebUtility.UrlEncode(s.Split('-')[0].Trim(' ')));
+            });
             Notify_Icon.ShowBalloonTip(timeout);
         }
         private bool FilterAlerts(string title)
@@ -370,11 +374,9 @@ namespace Warframe_Alerts
         {
             phaseShift = true;
             this.ForceHide();
-
-            Notify_Icon.BalloonTipText = @"Warframe_Alerts is running in background";
-            Notify_Icon.BalloonTipTitle = @"Update";
+            
             if (!config.Data.startMinimized)
-                Notify_Icon.ShowBalloonTip(2000);
+                Notify("Warframe_Alerts is running in background", "Update", 500);
             phaseShift = false;
         }
         private void ShowForm()

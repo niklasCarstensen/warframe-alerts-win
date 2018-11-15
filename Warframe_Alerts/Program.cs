@@ -11,23 +11,23 @@ namespace Warframe_Alerts
         public string ID;
         public string Title;
         public string Description;
-        public string Start_Date;
+        public string StartDate;
         public string Faction;
-        public string Expiry_Date;
+        public string ExpiryDate;
     }
 
     public struct Invasion
     {
         public string ID;
         public string Title;
-        public string Start_Date;
+        public string StartDate;
     }
 
     public struct Outbreak
     {
         public string ID;
         public string Title;
-        public string Start_Date;
+        public string StartDate;
     }
 
     static class Program

@@ -20,6 +20,7 @@ namespace Warframe_Alerts
         private readonly List<string> idList = new List<string>();
         private readonly System.Windows.Forms.Timer updateTimer = new System.Windows.Forms.Timer();
         private bool phaseShift;
+        private string lastNotifyText;
 
         public bool GameDetection { get; set; } = true;
         public sealed override Size MinimumSize
@@ -259,10 +260,19 @@ namespace Warframe_Alerts
                 Notify_Icon.BalloonTipText = text;
                 Notify_Icon.BalloonTipTitle = title;
                 Notify_Icon.BalloonTipClicked += ((object sender, EventArgs e) => {
-                    string notifyText = ((NotifyIcon)sender).BalloonTipText;
-                    foreach (string s in notifyText.Split('\n'))
-                        if (s.Contains("-"))
-                            Process.Start("https://warframe.fandom.com/wiki/Special:Search?query=" + WebUtility.UrlEncode(s.Split('-')[0].Trim(' ')));
+                    try
+                    {
+                        string notifyText = ((NotifyIcon)sender).BalloonTipText;
+                        if (notifyText != lastNotifyText && MessageBox.Show("Show:\n" + notifyText + "\nin Browser?", "Show?", MessageBoxButtons.YesNo) == DialogResult.Yes)
+                            foreach (string s in notifyText.Split('\n'))
+                                if (s.Contains("-"))
+                                    Process.Start("https://warframe.fandom.com/wiki/Special:Search?query=" + WebUtility.UrlEncode(s.Split('-')[0].Trim(' ')));
+                        lastNotifyText = notifyText;
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show("UwU we made fucky wucky \n\n" + ex);
+                    }
                 });
                 Notify_Icon.ShowBalloonTip(timeout);
             }

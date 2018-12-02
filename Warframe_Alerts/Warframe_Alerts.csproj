@@ -87,6 +87,10 @@
     <Reference Include="MaterialSkin, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\MaterialSkin.Updated.0.2.2\lib\MaterialSkin.dll</HintPath>
     </Reference>
+    <Reference Include="Newtonsoft.Json, Version=12.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.12.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -116,6 +120,27 @@
       <DependentUpon>Settings.cs</DependentUpon>
     </Compile>
     <Compile Include="WarframeHandler.cs" />
+    <Compile Include="WarframeObjects\Alert.cs" />
+    <Compile Include="WarframeObjects\Cetuscycle.cs" />
+    <Compile Include="WarframeObjects\ConclaveChallenge.cs" />
+    <Compile Include="WarframeObjects\CountedItem.cs" />
+    <Compile Include="WarframeObjects\DailyDeal.cs" />
+    <Compile Include="WarframeObjects\DarkSector.cs" />
+    <Compile Include="WarframeObjects\Earthcycle.cs" />
+    <Compile Include="WarframeObjects\Event.cs" />
+    <Compile Include="WarframeObjects\Fissure.cs" />
+    <Compile Include="WarframeObjects\FlashSale.cs" />
+    <Compile Include="WarframeObjects\GlobalUpgrade.cs" />
+    <Compile Include="WarframeObjects\Invasion.cs" />
+    <Compile Include="WarframeObjects\Mission.cs" />
+    <Compile Include="WarframeObjects\NewsArticle.cs" />
+    <Compile Include="WarframeObjects\PersistentEnemy.cs" />
+    <Compile Include="WarframeObjects\Reward.cs" />
+    <Compile Include="WarframeObjects\Simaris.cs" />
+    <Compile Include="WarframeObjects\Sortie.cs" />
+    <Compile Include="WarframeObjects\SyndicateMission.cs" />
+    <Compile Include="WarframeObjects\VoidTrader.cs" />
+    <Compile Include="WarframeObjects\WorldState.cs" />
     <Compile Include="XML\config.cs" />
     <Compile Include="XML\configData.cs" />
     <EmbeddedResource Include="MainForm.resx">
@@ -150,6 +175,7 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="WarframeObjects\License.txt" />
     <Content Include="WF_V3.ico" />
   </ItemGroup>
   <ItemGroup>

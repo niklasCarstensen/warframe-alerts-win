@@ -6,7 +6,7 @@ namespace Warframe_Alerts
     public partial class Settings : Form
     {
         private readonly MainForm parent;
-        private string[] recommendedFilters = new string[] { "(Blueprint)", "Catalyst", "Reactor", "cr", "ENDO", "Nitain", "Tellurium", "-Vauban" };
+        private string[] recommendedFilters = new string[] { "(Blueprint)", "Orokin", "Riven", "ENDO", "Nitain", "Tellurium", "-Vauban" };
 
         public Settings(MainForm mw)
         {

@@ -122,7 +122,7 @@ namespace Warframe_Alerts
             this.MBtnSettings.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.MBtnSettings.Depth = 0;
             this.MBtnSettings.Icon = null;
-            this.MBtnSettings.Location = new System.Drawing.Point(751, 478);
+            this.MBtnSettings.Location = new System.Drawing.Point(752, 478);
             this.MBtnSettings.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
             this.MBtnSettings.MouseState = MaterialSkin.MouseState.HOVER;
             this.MBtnSettings.Name = "MBtnSettings";
@@ -139,7 +139,7 @@ namespace Warframe_Alerts
             this.MBtnUpdate.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.MBtnUpdate.Depth = 0;
             this.MBtnUpdate.Icon = null;
-            this.MBtnUpdate.Location = new System.Drawing.Point(844, 478);
+            this.MBtnUpdate.Location = new System.Drawing.Point(845, 478);
             this.MBtnUpdate.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
             this.MBtnUpdate.MouseState = MaterialSkin.MouseState.HOVER;
             this.MBtnUpdate.Name = "MBtnUpdate";
@@ -156,7 +156,7 @@ namespace Warframe_Alerts
             this.MBtnExit.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.MBtnExit.Depth = 0;
             this.MBtnExit.Icon = null;
-            this.MBtnExit.Location = new System.Drawing.Point(693, 478);
+            this.MBtnExit.Location = new System.Drawing.Point(694, 478);
             this.MBtnExit.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
             this.MBtnExit.MouseState = MaterialSkin.MouseState.HOVER;
             this.MBtnExit.Name = "MBtnExit";
@@ -273,7 +273,7 @@ namespace Warframe_Alerts
             this.minButton.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.minButton.Depth = 0;
             this.minButton.Icon = null;
-            this.minButton.Location = new System.Drawing.Point(925, 478);
+            this.minButton.Location = new System.Drawing.Point(926, 478);
             this.minButton.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
             this.minButton.MouseState = MaterialSkin.MouseState.HOVER;
             this.minButton.Name = "minButton";
@@ -304,7 +304,7 @@ namespace Warframe_Alerts
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
-            this.ClientSize = new System.Drawing.Size(1020, 530);
+            this.ClientSize = new System.Drawing.Size(1025, 530);
             this.Controls.Add(this.CBNoti);
             this.Controls.Add(this.minButton);
             this.Controls.Add(this.CBStartM);

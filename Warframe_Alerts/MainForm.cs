@@ -67,36 +67,43 @@ namespace Warframe_Alerts
         // Update
         public void WFupdate()
         {
-            var wf = new WarframeHandler();
+            List<Alert> alerts = new List<Alert>();
+            List<Invasion> invasions = new List<Invasion>();
+            List<Outbreak> outbreaks = new List<Outbreak>();
 
-            var alerts = new List<Alert>();
-            var invasions = new List<Invasion>();
-            var outbreaks = new List<Outbreak>();
-
-            var status = "";
-            var response = wf.GetXml(ref status);
+            string status = "";
+            string xmlResponse = WarframeHandler.GetXml(ref status);
 
             if (status != "OK")
             {
-                string message = "Network not responding\n" + response;
+                string message = "Network not responding\n" + xmlResponse;
                 
-                Notify("Update Failed", message, 1000);
+                Notify("XML Update Failed", message, 1000);
                 return;
             }
 
-            wf.GetObjects(response, ref alerts, ref invasions, ref outbreaks);
+            string jsonResponse = WarframeHandler.GetJson(ref status);
 
-            if (GameDetection)
+            if (status != "OK")
             {
-                if (!DetectWarframe())
-                {
-                    NotifyAlertsAndInvasions(ref alerts, ref invasions, ref outbreaks);
-                }
+                string message = "Network not responding\n" + xmlResponse;
+
+                Notify("Json Update Failed", message, 1000);
+                return;
             }
-            else
-            {
+
+            WarframeHandler.GetJsonObjects(jsonResponse);
+
+            //materialLabel3.InvokeIfRequired(() => { materialLabel3.Text = "Cetus Time: " + (WarframeHandler.worldState.WS_CetusCycle.IsDay ? "Day" : "Night") + 
+            //    " " + WarframeHandler.worldState.WS_CetusCycle.TimeLeft + " " + WarframeHandler.worldState.WS_VoidTrader.Character + ": " + 
+            //    (WarframeHandler.worldState.WS_VoidTrader.EndTime - DateTime.Now); });
+
+            WarframeHandler.GetXMLObjects(xmlResponse, ref alerts, ref invasions, ref outbreaks);
+            
+            if (!GameDetection)
                 NotifyAlertsAndInvasions(ref alerts, ref invasions, ref outbreaks);
-            }
+            else if (!DetectWarframe())
+                NotifyAlertsAndInvasions(ref alerts, ref invasions, ref outbreaks);
 
             Invoke(new Action(() =>
             {
@@ -111,25 +118,25 @@ namespace Warframe_Alerts
 
             for (var i = 0; i < alerts.Count; i++)
             {
-                var eTime = Convert.ToDateTime(alerts[i].ExpiryDate);
+                DateTime eTime = Convert.ToDateTime(alerts[i].ExpiryDate);
 
-                var title = alerts[i].Title;
-                var titleSp = title.Split('-');
+                string title = alerts[i].Title;
+                string[] titleSp = title.Split('-');
 
-                var tempTitle = titleSp[0];
+                string tempTitle = titleSp[0];
 
-                for (var j = 1; j < titleSp.Length - 1; j++)
+                for (int j = 1; j < titleSp.Length - 1; j++)
                 {
                     tempTitle = tempTitle + "-" + titleSp[j];
                 }
 
-                var description = alerts[i].Description;
-                var faction = alerts[i].Faction;
-                var aId = alerts[i].ID;
+                string description = alerts[i].Description;
+                string faction = alerts[i].Faction;
+                string aId = alerts[i].ID;
 
                 //if (!Filter_Alerts(title)) continue;  Display all Alerts
-                var aSpan = eTime.Subtract(DateTime.Now);
-                var aLeft = "";
+                TimeSpan aSpan = eTime.Subtract(DateTime.Now);
+                string aLeft = "";
 
                 if (aSpan.Days != 0)
                 {
@@ -150,7 +157,7 @@ namespace Warframe_Alerts
 
                 idList.Add(aId);
                 string[] row = { description, tempTitle, faction, aLeft };
-                var listViewItem = new ListViewItem(row);
+                ListViewItem listViewItem = new ListViewItem(row);
                 Invoke(new Action(() => AlertData.Items.Add(listViewItem)));
             }
 

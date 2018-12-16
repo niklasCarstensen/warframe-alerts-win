@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
@@ -11,6 +12,7 @@ using System.Diagnostics;
 using System.Threading.Tasks;
 using System.Threading;
 using System.Net;
+using RemotableObjects;
 
 namespace Warframe_Alerts
 {
@@ -21,6 +23,7 @@ namespace Warframe_Alerts
         private readonly System.Windows.Forms.Timer updateTimer = new System.Windows.Forms.Timer();
         private bool phaseShift;
         private string lastNotifyText;
+        frmRCleint client;
 
         public bool GameDetection { get; set; } = true;
         public sealed override Size MinimumSize
@@ -43,7 +46,7 @@ namespace Warframe_Alerts
             skinManager.AddFormToManage(this);
             skinManager.Theme = MaterialSkinManager.Themes.DARK;
             FormBorderStyle = FormBorderStyle.None;
-            MaximumSize = new Size(1020, 530);
+            MaximumSize = new Size(1220, 530);
             MinimumSize = new Size(1020, 530);
             skinManager.ColorScheme = new ColorScheme((Primary)0x01C2F8, (Primary)0x039AC5, (Primary)0x4CD6FD, (Accent)0x039AC5, TextShade.WHITE);
 
@@ -53,6 +56,8 @@ namespace Warframe_Alerts
         }
         private void MainWindow_Load(object sender, EventArgs e)
         {
+            client = new frmRCleint();
+
             Global.UpdateFilters();
             WFupdate();
 
@@ -97,13 +102,17 @@ namespace Warframe_Alerts
             //materialLabel3.InvokeIfRequired(() => { materialLabel3.Text = "Cetus Time: " + (WarframeHandler.worldState.WS_CetusCycle.IsDay ? "Day" : "Night") + 
             //    " " + WarframeHandler.worldState.WS_CetusCycle.TimeLeft + " " + WarframeHandler.worldState.WS_VoidTrader.Character + ": " + 
             //    (WarframeHandler.worldState.WS_VoidTrader.EndTime - DateTime.Now); });
+            stateLabel.InvokeIfRequired(() => { stateLabel.Text = "Worldstate:\n" +
+                "Cetus Time: " + (WarframeHandler.worldState.WS_CetusCycle.IsDay ? "Day" : "Night") + " " + WarframeHandler.worldState.WS_CetusCycle.TimeLeft + "\n" +
+                "Trader Arrival: " + (WarframeHandler.worldState.WS_VoidTrader.StartTime - DateTime.Now).ToString(@"dd\:hh\:mm") + "\n" +
+                "Void Fissures: \n" +
+                WarframeHandler.worldState.WS_Fissures.Select((x) => { return (x.EndTime - DateTime.Now).ToString(@"hh\:mm\:ss") + " " + x.Tier + " " + x.MissionType + "\n"; }).
+                    Aggregate((x, y) => { return x + y; });
+            });
 
             WarframeHandler.GetXMLObjects(xmlResponse, ref alerts, ref invasions, ref outbreaks);
-            
-            if (!GameDetection)
-                NotifyAlertsAndInvasions(ref alerts, ref invasions, ref outbreaks);
-            else if (!DetectWarframe())
-                NotifyAlertsAndInvasions(ref alerts, ref invasions, ref outbreaks);
+
+            NotifyAlertsAndInvasions(ref alerts, ref invasions, ref outbreaks);
 
             Invoke(new Action(() =>
             {
@@ -262,7 +271,10 @@ namespace Warframe_Alerts
         }
         void Notify(string title, string text, int timeout)
         {
-            if (config.Data.desktopNotifications)
+            client.setMessage(title + ": \n" + text);
+
+            if (config.Data.desktopNotifications && !GameDetection ||
+                config.Data.desktopNotifications && !DetectWarframe())
             {
                 Notify_Icon.BalloonTipText = text;
                 Notify_Icon.BalloonTipTitle = title;

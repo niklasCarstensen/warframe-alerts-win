@@ -15,6 +15,7 @@ namespace Warframe_Alerts
         public bool enableLog;
         public bool desktopNotifications;
         public List<string> Filters;
+        public bool VoidTraderArrived;
 
         public configData()
         {

@@ -13,6 +13,7 @@ using System.Threading.Tasks;
 using System.Threading;
 using System.Net;
 using RemotableObjects;
+using WarframeNET;
 
 namespace Warframe_Alerts
 {
@@ -80,28 +81,26 @@ namespace Warframe_Alerts
             string xmlResponse = WarframeHandler.GetXml(ref status);
 
             if (status != "OK")
-            {
-                string message = "Network not responding\n" + xmlResponse;
-                
-                Notify("XML Update Failed", message, 1000);
                 return;
-            }
 
             string jsonResponse = WarframeHandler.GetJson(ref status);
 
             if (status != "OK")
-            {
-                string message = "Network not responding\n" + xmlResponse;
-
-                Notify("Json Update Failed", message, 1000);
                 return;
-            }
 
             WarframeHandler.GetJsonObjects(jsonResponse);
 
-            //materialLabel3.InvokeIfRequired(() => { materialLabel3.Text = "Cetus Time: " + (WarframeHandler.worldState.WS_CetusCycle.IsDay ? "Day" : "Night") + 
-            //    " " + WarframeHandler.worldState.WS_CetusCycle.TimeLeft + " " + WarframeHandler.worldState.WS_VoidTrader.Character + ": " + 
-            //    (WarframeHandler.worldState.WS_VoidTrader.EndTime - DateTime.Now); });
+            if (!config.Data.VoidTraderArrived && WarframeHandler.worldState.WS_VoidTrader.Inventory.Count != 0)
+            {
+                string items = "";
+                foreach (VoidTraderItem item in WarframeHandler.worldState.WS_VoidTrader.Inventory)
+                {
+                    items += item.Item + " " + item.Credits + "c " + item.Ducats + "D\n";
+                }
+                Notify("Update", "Void trader arrived at " + WarframeHandler.worldState.WS_VoidTrader.Location + " with: \n" + items + "He will leave again at " + WarframeHandler.worldState.WS_VoidTrader.EndTime, 1000);
+            }
+            config.Data.VoidTraderArrived = WarframeHandler.worldState.WS_VoidTrader.Inventory.Count != 0;
+            
             stateLabel.InvokeIfRequired(() => { stateLabel.Text = "Worldstate:\n" +
                 "Cetus Time: " + (WarframeHandler.worldState.WS_CetusCycle.IsDay ? "Day" : "Night") + " " + WarframeHandler.worldState.WS_CetusCycle.TimeLeft + "\n" +
                 "Trader Arrival: " + (WarframeHandler.worldState.WS_VoidTrader.StartTime - DateTime.Now).ToString(@"dd\:hh\:mm") + "\n" +
@@ -239,7 +238,10 @@ namespace Warframe_Alerts
                     LogAlert(a[j].ID, a[j].Title);
 
                 if (FilterAlerts(a[j].Title))
-                    notificationMessage = notificationMessage + a[j].Title + '\n';
+                {
+                    DateTime exp = Convert.ToDateTime(a[j].ExpiryDate);
+                    notificationMessage += a[j].Title + "\nTime remaining: " + Math.Round((exp - DateTime.Now).TotalMinutes, 2) + "m\n";
+                }
             }
 
             for (int j = 0; j < i.Count; j++)
@@ -251,7 +253,7 @@ namespace Warframe_Alerts
                     LogInvasion(i[j].ID, i[j].Title);
 
                 if (FilterAlerts(i[j].Title))
-                    notificationMessage = notificationMessage + i[j].Title + '\n';
+                    notificationMessage += i[j].Title + "\n";
             }
 
             for (int j = 0; j < o.Count; j++)
@@ -263,7 +265,7 @@ namespace Warframe_Alerts
                     LogInvasion(o[j].ID, o[j].Title);
 
                 if (FilterAlerts(o[j].Title))
-                    notificationMessage = notificationMessage + o[j].Title + '\n';
+                    notificationMessage += o[j].Title + "\n";
             }
 
             if (notificationMessage != "")
@@ -271,7 +273,8 @@ namespace Warframe_Alerts
         }
         void Notify(string title, string text, int timeout)
         {
-            client.setMessage(title + ": \n" + text);
+            if (title == "Update")
+                client.setMessage(text + "|" + stateLabel.Text);
 
             if (config.Data.desktopNotifications && !GameDetection ||
                 config.Data.desktopNotifications && !DetectWarframe())
@@ -412,9 +415,6 @@ namespace Warframe_Alerts
         {
             phaseShift = true;
             this.ForceHide();
-            
-            if (!config.Data.startMinimized)
-                Notify("Warframe_Alerts is running in background", "Update", 500);
             phaseShift = false;
         }
         private void ShowForm()

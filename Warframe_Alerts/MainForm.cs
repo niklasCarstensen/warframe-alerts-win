@@ -97,15 +97,17 @@ namespace Warframe_Alerts
                 {
                     items += item.Item + " " + item.Credits + "c " + item.Ducats + "D\n";
                 }
-                Notify("Update", "Void trader arrived at " + WarframeHandler.worldState.WS_VoidTrader.Location + " with: \n" + items + "He will leave again at " + WarframeHandler.worldState.WS_VoidTrader.EndTime, 1000);
+                Notify("Update", "Void trader arrived at " + WarframeHandler.worldState.WS_VoidTrader.Location + " with: \n" + items + "\nHe will leave again at " + WarframeHandler.worldState.WS_VoidTrader.EndTime, 1000);
             }
             config.Data.VoidTraderArrived = WarframeHandler.worldState.WS_VoidTrader.Inventory.Count != 0;
             
             stateLabel.InvokeIfRequired(() => { stateLabel.Text = "Worldstate:\n" +
                 "Cetus Time: " + (WarframeHandler.worldState.WS_CetusCycle.IsDay ? "Day" : "Night") + " " + WarframeHandler.worldState.WS_CetusCycle.TimeLeft + "\n" +
-                "Trader Arrival: " + (WarframeHandler.worldState.WS_VoidTrader.StartTime - DateTime.Now).ToString(@"dd\:hh\:mm") + "\n" +
-                "Void Fissures: \n" +
-                WarframeHandler.worldState.WS_Fissures.Select((x) => { return (x.EndTime - DateTime.Now).ToString(@"hh\:mm\:ss") + " " + x.Tier + " " + x.MissionType + "\n"; }).
+                (config.Data.VoidTraderArrived ? WarframeHandler.worldState.WS_VoidTrader.Inventory.Select(x => x.Item + " " + x.Credits + "c " + x.Ducats + "D").Aggregate((x, y) => x + "\n" + y) + 
+                "Trader leaves at: " + WarframeHandler.worldState.WS_VoidTrader.EndTime.AddHours(1) : 
+                "Trader Arrival: " + (WarframeHandler.worldState.WS_VoidTrader.StartTime.AddHours(1) - DateTime.Now).ToString(@"dd\:hh\:mm\:ss")) + "\n" +
+                "\nVoid Fissures: \n" +
+                WarframeHandler.worldState.WS_Fissures.Select((x) => { return (x.EndTime.AddHours(1) - DateTime.Now).ToString(@"hh\:mm\:ss") + " " + x.Tier + " " + x.MissionType + "\n"; }).
                     Aggregate((x, y) => { return x + y; });
             });
 
@@ -134,32 +136,23 @@ namespace Warframe_Alerts
                 string tempTitle = titleSp[0];
 
                 for (int j = 1; j < titleSp.Length - 1; j++)
-                {
                     tempTitle = tempTitle + "-" + titleSp[j];
-                }
 
                 string description = alerts[i].Description;
                 string faction = alerts[i].Faction;
                 string aId = alerts[i].ID;
-
-                //if (!Filter_Alerts(title)) continue;  Display all Alerts
+                
                 TimeSpan aSpan = eTime.Subtract(DateTime.Now);
                 string aLeft = "";
 
                 if (aSpan.Days != 0)
-                {
                     aLeft = aLeft + aSpan.Days + " Days ";
-                }
 
                 if (aSpan.Hours != 0)
-                {
                     aLeft = aLeft + aSpan.Hours + " Hours ";
-                }
 
                 if (aSpan.Minutes != 0)
-                {
                     aLeft = aLeft + aSpan.Minutes + " Minutes ";
-                }
 
                 aLeft = aLeft + aSpan.Seconds + " Seconds Left";
 
@@ -181,9 +174,7 @@ namespace Warframe_Alerts
                 var time = "";
 
                 if (span.Hours != 0)
-                {
                     time = time + span.Hours + " Hours ";
-                }
 
                 time = time + span.Minutes + " Minutes Ago";
 
@@ -205,9 +196,7 @@ namespace Warframe_Alerts
                 var oTime = "";
 
                 if (oSpan.Hours != 0)
-                {
                     oTime = oTime + oSpan.Hours + " Hours ";
-                }
 
                 oTime = oTime + oSpan.Minutes + " Minutes Ago";
 
@@ -240,7 +229,7 @@ namespace Warframe_Alerts
                 if (FilterAlerts(a[j].Title))
                 {
                     DateTime exp = Convert.ToDateTime(a[j].ExpiryDate);
-                    notificationMessage += a[j].Title + "\nTime remaining: " + Math.Round((exp - DateTime.Now).TotalMinutes, 2) + "m\n";
+                    notificationMessage += a[j].Title + "\nExpires at " + exp.ToString(@"hh\:mm\:ss") + " so in " + (int)(exp - DateTime.Now).TotalMinutes +  "m\n";
                 }
             }
 

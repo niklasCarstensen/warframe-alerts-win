@@ -12,10 +12,10 @@ namespace Warframe_Alerts
         public bool GameDetection;
         public int UpdateInterval;
         public bool startMinimized;
-        public bool enableLog;
         public bool desktopNotifications;
         public List<string> Filters;
         public bool VoidTraderArrived;
+        public List<string> idList;
 
         public configData()
         {
@@ -23,9 +23,9 @@ namespace Warframe_Alerts
             UpdateInterval = 1 * 60 * 1000;
             GameDetection = true;
             startMinimized = false;
-            enableLog = false;
             Filters = new List<string>();
             desktopNotifications = true;
+            idList = new List<string>();
         }
     }
 }

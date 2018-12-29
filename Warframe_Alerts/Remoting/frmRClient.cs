@@ -13,11 +13,7 @@ namespace RemotableObjects
 
 	public class frmRCleint
 	{
-		private System.Windows.Forms.TextBox textBox1;
-		
 		MyRemotableObject remoteObject;
-		
-		private System.ComponentModel.Container components = null;
 
 		public frmRCleint()
 		{

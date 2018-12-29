@@ -6,30 +6,6 @@ using System.Windows.Forms;
 
 namespace Warframe_Alerts
 {
-    public struct Alert
-    {
-        public string ID;
-        public string Title;
-        public string Description;
-        public string StartDate;
-        public string Faction;
-        public string ExpiryDate;
-    }
-
-    public struct Invasion
-    {
-        public string ID;
-        public string Title;
-        public string StartDate;
-    }
-
-    public struct Outbreak
-    {
-        public string ID;
-        public string Title;
-        public string StartDate;
-    }
-
     static class Program
     {
         /// <summary>

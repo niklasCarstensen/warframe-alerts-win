@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MaterialSkin.Controls;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.IO;
@@ -9,6 +10,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using WarframeNET;
 
 namespace Warframe_Alerts
 {
@@ -138,6 +140,40 @@ namespace Warframe_Alerts
         public static void ForceShow(this Form F)
         {
             Show(F.Handle);
+        }
+        public static string ToTitle(this Reward r)
+        {
+            List<string> inputs = new List<string> { (r.Items.Count == 0 ? "" : r.Items.Aggregate((x, y) => x + " " + y)),
+                                                     (r.CountedItems.Count == 0 ? "" : r.CountedItems.Select(x => (x.Count > 1 ? x.Count + " " : "") + x.Type).Aggregate((x, y) => x + " " + y)),
+                                                     (r.Credits == 0 ? "" : r.Credits + "c") };
+            inputs.RemoveAll(x => string.IsNullOrWhiteSpace(x));
+            return inputs.Count == 0 ? "" : inputs.Aggregate((x, y) => (x + " - " + y));
+        }
+        public static string ToTitle(this Alert a)
+        {
+            return a.Mission.Reward.ToTitle() + " - " + a.Mission.Node;
+        }
+        public static string ToTitle(this Invasion inv)
+        {
+            return inv.AttackingFaction + "(" + inv.AttackerReward.ToTitle() + ") vs. " + inv.DefendingFaction + "(" + inv.DefenderReward.ToTitle() + ") - " + inv.Node;
+        }
+        public static string ToReadable(this TimeSpan t)
+        {
+            return string.Format("{0}{1}{2}{3}", t.Days > 0 ? t.Days + "d " : "",
+                                                 t.Hours > 0 ? t.Hours + "h " : "",
+                                                 t.Minutes > 0 ? t.Minutes + "m " : "",
+                                                 t.Seconds > 0 ? t.Seconds + "s " : "0s ").Trim(' ');
+        }
+        public static void Fix(this MaterialListView v)
+        {
+            bool scrollbarVisible = false;
+            for (int i = 0; i < v.Items.Count; i++)
+                if (v.Items[i].Bounds.Bottom > v.Height)
+                    scrollbarVisible = true;
+            int widthSum = 0;
+            for (int i = 0; i < v.Columns.Count - 1; i++)
+                widthSum += v.Columns[i].Width;
+            v.Columns[v.Columns.Count - 1].Width = v.Width - widthSum - (scrollbarVisible ? 17 : 0); // Scrollbar width is 16 px
         }
     }
 }

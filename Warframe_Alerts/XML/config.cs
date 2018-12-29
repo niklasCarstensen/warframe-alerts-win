@@ -14,7 +14,7 @@ namespace Warframe_Alerts
     public static class config
     {
         static string configPath = Global.CurrentExecutablePath + "\\config.xml";
-        public static configData Data = new configData();
+        public static configData Data;
         static Loader L = new Loader();
         
         public static bool Exists()

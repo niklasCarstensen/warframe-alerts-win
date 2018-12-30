@@ -182,7 +182,7 @@ namespace Warframe_Alerts
                     SyndicateJob job = ostrons.jobs[j];
                     Tabs[2].Items.Add(new ListViewItem(new string[] { (j + 1) + ". Bounty: (" + job.standingStages.Sum() + " Standing)" }));
                     for (int i = 0; i < job.rewardPool.Count; i += 2)
-                        Tabs[2].Items.Add(new ListViewItem(new string[] { job.rewardPool[i] + (job.rewardPool.Count < i + 1 ? ", " + job.rewardPool[i + 1] : "") }));
+                        Tabs[2].Items.Add(new ListViewItem(new string[] { job.rewardPool[i] + (job.rewardPool.Count > i+1 ? ", " + job.rewardPool[i+1] : "") }));
                     Tabs[2].Items.Add(new ListViewItem(new string[] { }));
                 }
                 Tabs[2].Items.RemoveAt(Tabs[2].Items.Count - 1);
@@ -194,7 +194,7 @@ namespace Warframe_Alerts
                     SyndicateJob job = tuna.jobs[j];
                     Tabs[3].Items.Add(new ListViewItem(new string[] { (j+1) + ". Bounty: (" + job.standingStages.Sum() + " Standing)" }));
                     for (int i = 0; i < job.rewardPool.Count; i += 2)
-                        Tabs[3].Items.Add(new ListViewItem(new string[] { job.rewardPool[i] + (job.rewardPool.Count < i+1 ? ", " + job.rewardPool[i+1] : "") }));
+                        Tabs[3].Items.Add(new ListViewItem(new string[] { job.rewardPool[i] + (job.rewardPool.Count > i+1 ? ", " + job.rewardPool[i+1] : "") }));
                     Tabs[3].Items.Add(new ListViewItem(new string[] { }));
                 }
                 Tabs[3].Items.RemoveAt(Tabs[3].Items.Count - 1);

@@ -53,9 +53,12 @@ namespace Warframe_Alerts
             this.CBStartM = new MaterialSkin.Controls.MaterialCheckBox();
             this.minButton = new MaterialSkin.Controls.MaterialFlatButton();
             this.CBNoti = new MaterialSkin.Controls.MaterialCheckBox();
-            this.stateLabel = new MaterialSkin.Controls.MaterialLabel();
             this.FissureData = new MaterialSkin.Controls.MaterialListView();
             this.columnHeader8 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.label1 = new System.Windows.Forms.Label();
+            this.label2 = new System.Windows.Forms.Label();
+            this.label3 = new System.Windows.Forms.Label();
+            this.label4 = new System.Windows.Forms.Label();
             this.Menu_Strip.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -90,7 +93,7 @@ namespace Warframe_Alerts
             this.columnHeader6,
             this.columnHeader7});
             this.InvasionData.Depth = 0;
-            this.InvasionData.Font = new System.Drawing.Font("Microsoft Sans Serif", 24F);
+            this.InvasionData.Font = new System.Drawing.Font("Roboto", 32F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.World);
             this.InvasionData.FullRowSelect = true;
             this.InvasionData.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable;
             this.InvasionData.Location = new System.Drawing.Point(12, 299);
@@ -125,7 +128,7 @@ namespace Warframe_Alerts
             this.MBtnSettings.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.MBtnSettings.Depth = 0;
             this.MBtnSettings.Icon = null;
-            this.MBtnSettings.Location = new System.Drawing.Point(749, 478);
+            this.MBtnSettings.Location = new System.Drawing.Point(790, 478);
             this.MBtnSettings.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
             this.MBtnSettings.MouseState = MaterialSkin.MouseState.HOVER;
             this.MBtnSettings.Name = "MBtnSettings";
@@ -143,7 +146,7 @@ namespace Warframe_Alerts
             this.MBtnUpdate.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.MBtnUpdate.Depth = 0;
             this.MBtnUpdate.Icon = null;
-            this.MBtnUpdate.Location = new System.Drawing.Point(842, 478);
+            this.MBtnUpdate.Location = new System.Drawing.Point(883, 478);
             this.MBtnUpdate.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
             this.MBtnUpdate.MouseState = MaterialSkin.MouseState.HOVER;
             this.MBtnUpdate.Name = "MBtnUpdate";
@@ -161,7 +164,7 @@ namespace Warframe_Alerts
             this.MBtnExit.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.MBtnExit.Depth = 0;
             this.MBtnExit.Icon = null;
-            this.MBtnExit.Location = new System.Drawing.Point(691, 478);
+            this.MBtnExit.Location = new System.Drawing.Point(732, 478);
             this.MBtnExit.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
             this.MBtnExit.MouseState = MaterialSkin.MouseState.HOVER;
             this.MBtnExit.Name = "MBtnExit";
@@ -181,7 +184,7 @@ namespace Warframe_Alerts
             this.columnHeader3,
             this.columnHeader4});
             this.AlertData.Depth = 0;
-            this.AlertData.Font = new System.Drawing.Font("Microsoft Sans Serif", 24F);
+            this.AlertData.Font = new System.Drawing.Font("Roboto", 32F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.World);
             this.AlertData.FullRowSelect = true;
             this.AlertData.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable;
             this.AlertData.Location = new System.Drawing.Point(12, 96);
@@ -221,7 +224,7 @@ namespace Warframe_Alerts
             this.materialLabel1.Depth = 0;
             this.materialLabel1.Font = new System.Drawing.Font("Roboto", 11F);
             this.materialLabel1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            this.materialLabel1.Location = new System.Drawing.Point(13, 77);
+            this.materialLabel1.Location = new System.Drawing.Point(23, 74);
             this.materialLabel1.MouseState = MaterialSkin.MouseState.HOVER;
             this.materialLabel1.Name = "materialLabel1";
             this.materialLabel1.Size = new System.Drawing.Size(49, 19);
@@ -234,7 +237,7 @@ namespace Warframe_Alerts
             this.materialLabel2.Depth = 0;
             this.materialLabel2.Font = new System.Drawing.Font("Roboto", 11F);
             this.materialLabel2.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            this.materialLabel2.Location = new System.Drawing.Point(13, 277);
+            this.materialLabel2.Location = new System.Drawing.Point(23, 277);
             this.materialLabel2.MouseState = MaterialSkin.MouseState.HOVER;
             this.materialLabel2.Name = "materialLabel2";
             this.materialLabel2.Size = new System.Drawing.Size(73, 19);
@@ -245,7 +248,7 @@ namespace Warframe_Alerts
             // 
             this.CBStartM.Depth = 0;
             this.CBStartM.Font = new System.Drawing.Font("Roboto", 10F);
-            this.CBStartM.Location = new System.Drawing.Point(17, 478);
+            this.CBStartM.Location = new System.Drawing.Point(9, 478);
             this.CBStartM.Margin = new System.Windows.Forms.Padding(0);
             this.CBStartM.MouseLocation = new System.Drawing.Point(-1, -1);
             this.CBStartM.MouseState = MaterialSkin.MouseState.HOVER;
@@ -264,7 +267,7 @@ namespace Warframe_Alerts
             this.minButton.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.minButton.Depth = 0;
             this.minButton.Icon = null;
-            this.minButton.Location = new System.Drawing.Point(923, 478);
+            this.minButton.Location = new System.Drawing.Point(964, 478);
             this.minButton.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
             this.minButton.MouseState = MaterialSkin.MouseState.HOVER;
             this.minButton.Name = "minButton";
@@ -291,35 +294,21 @@ namespace Warframe_Alerts
             this.CBNoti.UseVisualStyleBackColor = true;
             this.CBNoti.CheckedChanged += new System.EventHandler(this.CBNoti_CheckedChanged);
             // 
-            // stateLabel
-            // 
-            this.stateLabel.AutoSize = true;
-            this.stateLabel.Depth = 0;
-            this.stateLabel.Font = new System.Drawing.Font("Roboto", 11F);
-            this.stateLabel.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            this.stateLabel.Location = new System.Drawing.Point(723, 77);
-            this.stateLabel.MouseState = MaterialSkin.MouseState.HOVER;
-            this.stateLabel.Name = "stateLabel";
-            this.stateLabel.Size = new System.Drawing.Size(101, 19);
-            this.stateLabel.TabIndex = 24;
-            this.stateLabel.Text = "Void Fissures";
-            this.stateLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
             // FissureData
             // 
             this.FissureData.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.FissureData.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
             this.columnHeader8});
             this.FissureData.Depth = 0;
-            this.FissureData.Font = new System.Drawing.Font("Microsoft Sans Serif", 24F);
+            this.FissureData.Font = new System.Drawing.Font("Roboto", 32F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.World);
             this.FissureData.FullRowSelect = true;
             this.FissureData.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable;
-            this.FissureData.Location = new System.Drawing.Point(723, 99);
+            this.FissureData.Location = new System.Drawing.Point(723, 96);
             this.FissureData.MouseLocation = new System.Drawing.Point(-1, -1);
             this.FissureData.MouseState = MaterialSkin.MouseState.OUT;
             this.FissureData.Name = "FissureData";
             this.FissureData.OwnerDraw = true;
-            this.FissureData.Size = new System.Drawing.Size(261, 370);
+            this.FissureData.Size = new System.Drawing.Size(324, 373);
             this.FissureData.TabIndex = 25;
             this.FissureData.UseCompatibleStateImageBehavior = false;
             this.FissureData.View = System.Windows.Forms.View.Details;
@@ -329,13 +318,60 @@ namespace Warframe_Alerts
             this.columnHeader8.Text = "Title";
             this.columnHeader8.Width = 300;
             // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Font = new System.Drawing.Font("Roboto", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label1.ForeColor = System.Drawing.Color.White;
+            this.label1.Location = new System.Drawing.Point(733, 74);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(101, 19);
+            this.label1.TabIndex = 26;
+            this.label1.Text = "Void Fissures";
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Font = new System.Drawing.Font("Roboto", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label2.ForeColor = System.Drawing.Color.DarkGray;
+            this.label2.Location = new System.Drawing.Point(840, 74);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(87, 19);
+            this.label2.TabIndex = 27;
+            this.label2.Text = "Void Trader";
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Font = new System.Drawing.Font("Roboto", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label3.ForeColor = System.Drawing.Color.DarkGray;
+            this.label3.Location = new System.Drawing.Point(933, 74);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(48, 19);
+            this.label3.TabIndex = 28;
+            this.label3.Text = "Cetus";
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Font = new System.Drawing.Font("Roboto", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label4.ForeColor = System.Drawing.Color.DarkGray;
+            this.label4.Location = new System.Drawing.Point(987, 74);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(46, 19);
+            this.label4.TabIndex = 29;
+            this.label4.Text = "4tuna";
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
-            this.ClientSize = new System.Drawing.Size(1020, 530);
+            this.ClientSize = new System.Drawing.Size(1059, 530);
+            this.Controls.Add(this.label4);
+            this.Controls.Add(this.label3);
+            this.Controls.Add(this.label2);
+            this.Controls.Add(this.label1);
             this.Controls.Add(this.FissureData);
-            this.Controls.Add(this.stateLabel);
             this.Controls.Add(this.CBNoti);
             this.Controls.Add(this.minButton);
             this.Controls.Add(this.CBStartM);
@@ -349,8 +385,8 @@ namespace Warframe_Alerts
             this.Font = new System.Drawing.Font("Microsoft Sans Serif", 24F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
-            this.MaximumSize = new System.Drawing.Size(1350, 530);
-            this.MinimumSize = new System.Drawing.Size(1020, 530);
+            this.MaximumSize = new System.Drawing.Size(1059, 530);
+            this.MinimumSize = new System.Drawing.Size(1059, 530);
             this.Name = "MainForm";
             this.Text = "Warframe Alerts";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.MainForm_FormClosing);
@@ -383,9 +419,12 @@ namespace Warframe_Alerts
         private MaterialSkin.Controls.MaterialCheckBox CBStartM;
         private MaterialSkin.Controls.MaterialFlatButton minButton;
         private MaterialSkin.Controls.MaterialCheckBox CBNoti;
-        private MaterialSkin.Controls.MaterialLabel stateLabel;
         private MaterialSkin.Controls.MaterialListView FissureData;
         private ColumnHeader columnHeader8;
+        private Label label1;
+        private Label label2;
+        private Label label3;
+        private Label label4;
     }
 }
 

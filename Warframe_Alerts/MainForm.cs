@@ -25,22 +25,45 @@ namespace Warframe_Alerts
         private string lastNotifyText;
         frmRCleint client;
 
-        public bool GameDetection { get; set; } = true;
-        public sealed override Size MinimumSize
-        {
-            get { return base.MinimumSize; }
-            set { base.MinimumSize = value; }
-        }
-        public sealed override Size MaximumSize
-        {
-            get { return base.MaximumSize; }
-            set { base.MaximumSize = value; }
-        }
+        public bool GameDetection = true;
+        List<MaterialListView> Tabs = new List<MaterialListView>();
+        List<Label> TabLabels = new List<Label>();
 
         // Startup
         public MainForm()
         {
             InitializeComponent();
+
+            #region Tabs
+            Tabs.Add(FissureData);
+            TabLabels.Add(label1);
+            TabLabels.Add(label2);
+            TabLabels.Add(label3);
+            TabLabels.Add(label4);
+            while (TabLabels.Count > Tabs.Count)
+            {
+                MaterialListView view = new MaterialListView();
+                for (int i = 0; i < FissureData.Columns.Count; i++)
+                    view.Columns.Add((ColumnHeader)FissureData.Columns[i].Clone());
+                view.SetBounds(FissureData.Location.X, FissureData.Location.Y, FissureData.Width, FissureData.Height);
+
+                Controls.Add(view);
+                Tabs.Add(view);
+            }
+            FissureData.BringToFront();
+            for (int i = 0; i < TabLabels.Count; i++)
+                TabLabels[i].Click += (object sender, EventArgs e) => {
+                    this.InvokeIfRequired(() => {
+                        try {
+                            Tabs[TabLabels.IndexOf((Label)sender)].BringToFront();
+
+                            foreach (Label x in TabLabels)
+                                if (x == sender) x.ForeColor = Color.White;
+                                else x.ForeColor = Color.DarkGray;
+                        } catch { }
+                    });
+                };
+            #endregion
 
             var skinManager = MaterialSkinManager.Instance;
             skinManager.AddFormToManage(this);
@@ -89,8 +112,22 @@ namespace Warframe_Alerts
             config.Data.VoidTraderArrived = WarframeHandler.worldState.WS_VoidTrader.Inventory.Count != 0;
             #endregion
 
-            #region Notify Alerts and Invasions
+            #region Notify Syndicate Rewards
             string notification = "";
+            foreach (SyndicateMission mission in WarframeHandler.worldState.WS_SyndicateMissions)
+                for (int i = 0; i < mission.jobs.Count; i++)
+                    if (mission.jobs[i].rewardPool != null)
+                        foreach (string reward in mission.jobs[i].rewardPool)
+                            if (FilterRewards(reward) && !config.Data.idList.Contains(mission.jobs[i].id))
+                            {
+                                notification += reward + " currently available from the " + mission.Syndicate + "'s " + (i + 1) + ". bounty until " + mission.EndTime.ToLocalTime().ToLongTimeString() + "\n";
+                                config.Data.idList.Add(mission.jobs[i].id);
+                            }
+            Notify("Update", notification, 1000);
+            #endregion
+
+            #region Notify Alerts and Invasions
+            notification = "";
             foreach (Alert a in WarframeHandler.worldState.WS_Alerts)
                 if (!config.Data.idList.Contains(a.Id))
                 {
@@ -102,31 +139,22 @@ namespace Warframe_Alerts
                 if (!config.Data.idList.Contains(i.Id))
                 {
                     config.Data.idList.Add(i.Id);
-                    if (!i.IsCompleted && FilterRewards(i.AttackerReward.ToTitle() + " " + i.DefenderReward.ToTitle()))
+                    if (!i.IsCompleted && FilterRewards(i.AttackerReward.ToTitle() + i.DefenderReward.ToTitle()))
                         notification += i.ToTitle() + "\n";
                 }
             Notify("Update", notification, 1000);
             #endregion
-
-            //stateLabel.InvokeIfRequired(() => { stateLabel.Text = "Worldstate:\n" +
-            //    "Cetus Time: " + (WarframeHandler.worldState.WS_CetusCycle.IsDay ? "Day" : "Night") + " " + WarframeHandler.worldState.WS_CetusCycle.TimeLeft + "\n" +
-            //    (config.Data.VoidTraderArrived ? WarframeHandler.worldState.WS_VoidTrader.Inventory.Select(x => x.Item + " " + x.Credits + "c " + x.Ducats + "D").Aggregate((x, y) => x + "\n" + y) + 
-            //    "Trader leaves at: " + WarframeHandler.worldState.WS_VoidTrader.EndTime.AddHours(1) : 
-            //    "Trader Arrival: " + (WarframeHandler.worldState.WS_VoidTrader.StartTime.AddHours(1) - DateTime.Now).ToString(@"dd\:hh\:mm\:ss")) + "\n" +
-            //    "\nVoid Fissures: \n" +
-            //    WarframeHandler.worldState.WS_Fissures.Select((x) => { return (x.EndTime.AddHours(1) - DateTime.Now).ToString(@"hh\:mm\:ss") + " " + x.Tier + " " + x.MissionType + "\n"; }).
-            //        Aggregate((x, y) => { return x + y; });
-            //});
-
+            
             #region Update GUI
             this.InvokeIfRequired(() =>
             {
                 AlertData.Items.Clear();
                 InvasionData.Items.Clear();
-                FissureData.Items.Clear();
+                foreach (MaterialListView view in Tabs)
+                    view.Items.Clear();
 
                 IOrderedEnumerable<Alert> alerts = WarframeHandler.worldState.WS_Alerts.OrderBy(x => (x.EndTime.ToLocalTime() - DateTime.Now));
-                foreach (Alert a in WarframeHandler.worldState.WS_Alerts)
+                foreach (Alert a in alerts)
                     AlertData.Items.Add(new ListViewItem(new string[] { a.Mission.Type, a.ToTitle(), a.Mission.Faction, (a.EndTime.ToLocalTime() - DateTime.Now).ToReadable() + " ▾" }));
 
                 IOrderedEnumerable<Invasion> invasions = WarframeHandler.worldState.WS_Invasions.OrderBy(x => x.StartTime.Ticks);
@@ -139,9 +167,42 @@ namespace Warframe_Alerts
                 foreach (Fissure f in fissures)
                     FissureData.Items.Add(new ListViewItem(new string[] { f.Tier + " - " + f.MissionType + " - " + (f.EndTime.ToLocalTime() - DateTime.Now).ToReadable() + " ▾" }));
 
+                // Void Trader
+                if (!config.Data.VoidTraderArrived)
+                    Tabs[1].Items.Add("Baro will be back at " + WarframeHandler.worldState.WS_VoidTrader.StartTime);
+                else
+                    Tabs[1].Items.Add("Baro is here until " + WarframeHandler.worldState.WS_VoidTrader.EndTime);
+                foreach (VoidTraderItem i in WarframeHandler.worldState.WS_VoidTrader.Inventory)
+                    Tabs[1].Items.Add(new ListViewItem(new string[] { i.Item + "\t" + i.Credits + "c\t" + i.Ducats + "D" }));
+
+                // Cetus
+                SyndicateMission ostrons = WarframeHandler.worldState.WS_SyndicateMissions.Find(x => x.Syndicate == "Ostrons");
+                for (int j = 0; j < ostrons.jobs.Count; j++)
+                {
+                    SyndicateJob job = ostrons.jobs[j];
+                    Tabs[2].Items.Add(new ListViewItem(new string[] { (j + 1) + ". Bounty: (" + job.standingStages.Sum() + " Standing)" }));
+                    for (int i = 0; i < job.rewardPool.Count; i += 2)
+                        Tabs[2].Items.Add(new ListViewItem(new string[] { job.rewardPool[i] + (job.rewardPool.Count < i + 1 ? ", " + job.rewardPool[i + 1] : "") }));
+                    Tabs[2].Items.Add(new ListViewItem(new string[] { }));
+                }
+                Tabs[2].Items.RemoveAt(Tabs[2].Items.Count - 1);
+
+                // 4tuna
+                SyndicateMission tuna = WarframeHandler.worldState.WS_SyndicateMissions.Find(x => x.Syndicate == "Solaris United");
+                for (int j = 0; j < tuna.jobs.Count; j++) 
+                {
+                    SyndicateJob job = tuna.jobs[j];
+                    Tabs[3].Items.Add(new ListViewItem(new string[] { (j+1) + ". Bounty: (" + job.standingStages.Sum() + " Standing)" }));
+                    for (int i = 0; i < job.rewardPool.Count; i += 2)
+                        Tabs[3].Items.Add(new ListViewItem(new string[] { job.rewardPool[i] + (job.rewardPool.Count < i+1 ? ", " + job.rewardPool[i+1] : "") }));
+                    Tabs[3].Items.Add(new ListViewItem(new string[] { }));
+                }
+                Tabs[3].Items.RemoveAt(Tabs[3].Items.Count - 1);
+
                 AlertData.Fix();
                 InvasionData.Fix();
-                FissureData.Fix();
+                foreach (MaterialListView view in Tabs)
+                    view.Fix();
             });
             #endregion
 
@@ -153,7 +214,11 @@ namespace Warframe_Alerts
             if (string.IsNullOrWhiteSpace(text) || string.IsNullOrWhiteSpace(title) || timeout < 1)
                 return;
 
+#if DEBUG
             //client.setMessage(text);
+#else
+            client.setMessage(text);
+#endif
 
             if (config.Data.desktopNotifications && !GameDetection ||
                 config.Data.desktopNotifications && !DetectWarframe())

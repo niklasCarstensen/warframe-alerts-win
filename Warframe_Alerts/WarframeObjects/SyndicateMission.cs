@@ -26,6 +26,8 @@ namespace WarframeNET
         [JsonProperty("expiry")]
         public DateTime EndTime { get; set; }
 
+        public bool active;
+
         /// <summary>
         /// Syndicate of the mission.
         /// </summary>
@@ -35,6 +37,8 @@ namespace WarframeNET
         /// Nodes on which you can start the mission.
         /// </summary>
         public List<string> Nodes { get; set; }
+
+        public List<SyndicateJob> jobs;
 
         internal SyndicateMission() { }
     }

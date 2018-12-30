@@ -143,6 +143,7 @@
     <Compile Include="WarframeObjects\Reward.cs" />
     <Compile Include="WarframeObjects\Simaris.cs" />
     <Compile Include="WarframeObjects\Sortie.cs" />
+    <Compile Include="WarframeObjects\SyndicateJob.cs" />
     <Compile Include="WarframeObjects\SyndicateMission.cs" />
     <Compile Include="WarframeObjects\VoidTrader.cs" />
     <Compile Include="WarframeObjects\WorldState.cs" />

@@ -98,7 +98,7 @@ namespace Warframe_Alerts
             this.InvasionData.MouseState = MaterialSkin.MouseState.OUT;
             this.InvasionData.Name = "InvasionData";
             this.InvasionData.OwnerDraw = true;
-            this.InvasionData.Size = new System.Drawing.Size(763, 170);
+            this.InvasionData.Size = new System.Drawing.Size(705, 170);
             this.InvasionData.TabIndex = 10;
             this.InvasionData.UseCompatibleStateImageBehavior = false;
             this.InvasionData.View = System.Windows.Forms.View.Details;
@@ -125,7 +125,7 @@ namespace Warframe_Alerts
             this.MBtnSettings.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.MBtnSettings.Depth = 0;
             this.MBtnSettings.Icon = null;
-            this.MBtnSettings.Location = new System.Drawing.Point(797, 478);
+            this.MBtnSettings.Location = new System.Drawing.Point(749, 478);
             this.MBtnSettings.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
             this.MBtnSettings.MouseState = MaterialSkin.MouseState.HOVER;
             this.MBtnSettings.Name = "MBtnSettings";
@@ -143,7 +143,7 @@ namespace Warframe_Alerts
             this.MBtnUpdate.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.MBtnUpdate.Depth = 0;
             this.MBtnUpdate.Icon = null;
-            this.MBtnUpdate.Location = new System.Drawing.Point(890, 478);
+            this.MBtnUpdate.Location = new System.Drawing.Point(842, 478);
             this.MBtnUpdate.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
             this.MBtnUpdate.MouseState = MaterialSkin.MouseState.HOVER;
             this.MBtnUpdate.Name = "MBtnUpdate";
@@ -161,7 +161,7 @@ namespace Warframe_Alerts
             this.MBtnExit.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.MBtnExit.Depth = 0;
             this.MBtnExit.Icon = null;
-            this.MBtnExit.Location = new System.Drawing.Point(739, 478);
+            this.MBtnExit.Location = new System.Drawing.Point(691, 478);
             this.MBtnExit.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
             this.MBtnExit.MouseState = MaterialSkin.MouseState.HOVER;
             this.MBtnExit.Name = "MBtnExit";
@@ -189,7 +189,7 @@ namespace Warframe_Alerts
             this.AlertData.MouseState = MaterialSkin.MouseState.OUT;
             this.AlertData.Name = "AlertData";
             this.AlertData.OwnerDraw = true;
-            this.AlertData.Size = new System.Drawing.Size(763, 170);
+            this.AlertData.Size = new System.Drawing.Size(705, 170);
             this.AlertData.TabIndex = 16;
             this.AlertData.UseCompatibleStateImageBehavior = false;
             this.AlertData.View = System.Windows.Forms.View.Details;
@@ -264,7 +264,7 @@ namespace Warframe_Alerts
             this.minButton.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.minButton.Depth = 0;
             this.minButton.Icon = null;
-            this.minButton.Location = new System.Drawing.Point(971, 478);
+            this.minButton.Location = new System.Drawing.Point(923, 478);
             this.minButton.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
             this.minButton.MouseState = MaterialSkin.MouseState.HOVER;
             this.minButton.Name = "minButton";
@@ -297,7 +297,7 @@ namespace Warframe_Alerts
             this.stateLabel.Depth = 0;
             this.stateLabel.Font = new System.Drawing.Font("Roboto", 11F);
             this.stateLabel.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            this.stateLabel.Location = new System.Drawing.Point(777, 77);
+            this.stateLabel.Location = new System.Drawing.Point(723, 77);
             this.stateLabel.MouseState = MaterialSkin.MouseState.HOVER;
             this.stateLabel.Name = "stateLabel";
             this.stateLabel.Size = new System.Drawing.Size(101, 19);
@@ -314,12 +314,12 @@ namespace Warframe_Alerts
             this.FissureData.Font = new System.Drawing.Font("Microsoft Sans Serif", 24F);
             this.FissureData.FullRowSelect = true;
             this.FissureData.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable;
-            this.FissureData.Location = new System.Drawing.Point(781, 96);
+            this.FissureData.Location = new System.Drawing.Point(723, 99);
             this.FissureData.MouseLocation = new System.Drawing.Point(-1, -1);
             this.FissureData.MouseState = MaterialSkin.MouseState.OUT;
             this.FissureData.Name = "FissureData";
             this.FissureData.OwnerDraw = true;
-            this.FissureData.Size = new System.Drawing.Size(275, 370);
+            this.FissureData.Size = new System.Drawing.Size(261, 370);
             this.FissureData.TabIndex = 25;
             this.FissureData.UseCompatibleStateImageBehavior = false;
             this.FissureData.View = System.Windows.Forms.View.Details;
@@ -333,7 +333,7 @@ namespace Warframe_Alerts
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
-            this.ClientSize = new System.Drawing.Size(1068, 530);
+            this.ClientSize = new System.Drawing.Size(1020, 530);
             this.Controls.Add(this.FissureData);
             this.Controls.Add(this.stateLabel);
             this.Controls.Add(this.CBNoti);

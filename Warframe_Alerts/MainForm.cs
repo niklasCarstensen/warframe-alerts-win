@@ -129,11 +129,11 @@ namespace Warframe_Alerts
                 foreach (Alert a in WarframeHandler.worldState.WS_Alerts)
                     AlertData.Items.Add(new ListViewItem(new string[] { a.Mission.Type, a.ToTitle(), a.Mission.Faction, (a.EndTime.ToLocalTime() - DateTime.Now).ToReadable() + " ▾" }));
 
-                IOrderedEnumerable<Invasion> invasions = WarframeHandler.worldState.WS_Invasions.OrderBy(x => -x.StartTime.Ticks);
+                IOrderedEnumerable<Invasion> invasions = WarframeHandler.worldState.WS_Invasions.OrderBy(x => x.StartTime.Ticks);
                 foreach (Invasion inv in invasions)
                     if (!inv.IsCompleted)
                         InvasionData.Items.Add(new ListViewItem(new string[] { inv.ToTitle(), Math.Round(inv.Completion, 2) + "%",
-                            (DateTime.Now - inv.StartTime.ToLocalTime()).ToString(@"hh\:mm\:ss") + " ▴" }));
+                            (DateTime.Now - inv.StartTime.ToLocalTime()).ToReadable() + " ▴" }));
 
                 IOrderedEnumerable<Fissure> fissures = WarframeHandler.worldState.WS_Fissures.OrderBy(x => x.TierNumber);
                 foreach (Fissure f in fissures)

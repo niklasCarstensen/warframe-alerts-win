@@ -6,6 +6,7 @@ using System.Data;
 using System.Runtime.Remoting;
 using System.Runtime.Remoting.Channels;
 using System.Runtime.Remoting.Channels.Tcp;
+using System.Threading;
 
 namespace RemotableObjects
 {
@@ -30,7 +31,19 @@ namespace RemotableObjects
 
         public void setMessage(string text)
         {
-            remoteObject.SetMessage(text);
+            bool worked = false;
+            while (!worked)
+            {
+                try
+                {
+                    remoteObject.SetMessage(text);
+                    worked = true;
+                }
+                catch
+                {
+                    Thread.Sleep(50);
+                }
+            }
         }
 	}
 }

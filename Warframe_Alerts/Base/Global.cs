@@ -155,7 +155,7 @@ namespace Warframe_Alerts
         }
         public static string ToTitle(this Invasion inv)
         {
-            return inv.AttackingFaction + "(" + inv.AttackerReward.ToTitle() + ") vs. " + inv.DefendingFaction + "(" + inv.DefenderReward.ToTitle() + ") - " + inv.Node;
+            return inv.AttackingFaction + "(" + inv.AttackerReward.ToTitle() + ") vs. " + inv.DefendingFaction + "(" + inv.DefenderReward.ToTitle() + ") - " + inv.Node + " - " + inv.Description;
         }
         public static string ToReadable(this TimeSpan t)
         {
@@ -166,14 +166,17 @@ namespace Warframe_Alerts
         }
         public static void Fix(this MaterialListView v)
         {
-            bool scrollbarVisible = false;
-            for (int i = 0; i < v.Items.Count; i++)
-                if (v.Items[i].Bounds.Bottom > v.Height)
-                    scrollbarVisible = true;
-            int widthSum = 0;
-            for (int i = 0; i < v.Columns.Count - 1; i++)
-                widthSum += v.Columns[i].Width;
-            v.Columns[v.Columns.Count - 1].Width = v.Width - widthSum - (scrollbarVisible ? 17 : 0); // Scrollbar width is 16 px
+            if (v.Columns.Count > 0)
+            {
+                bool scrollbarVisible = false;
+                for (int i = 0; i < v.Items.Count; i++)
+                    if (v.Items[i].Bounds.Bottom > v.Height)
+                        scrollbarVisible = true;
+                int widthSum = 0;
+                for (int i = 0; i < v.Columns.Count - 1; i++)
+                    widthSum += v.Columns[i].Width;
+                v.Columns[v.Columns.Count - 1].Width = v.Width - widthSum - (scrollbarVisible ? 17 : 0); // Scrollbar width is 16 px
+            }
         }
     }
 }

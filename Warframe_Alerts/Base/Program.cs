@@ -23,11 +23,18 @@ namespace Warframe_Alerts
             } catch { return; }
             #endregion
 
-            SetProcessDPIAware();
-            Application.EnableVisualStyles();
-            Application.SetCompatibleTextRenderingDefault(true);
-            Global.Main = new MainForm();
-            Application.Run(Global.Main);
+            try
+            {
+                SetProcessDPIAware();
+                Application.EnableVisualStyles();
+                Application.SetCompatibleTextRenderingDefault(true);
+                Global.Main = new MainForm();
+                Application.Run(Global.Main);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.ToString());
+            }
         }
 
         [System.Runtime.InteropServices.DllImport("user32.dll")]

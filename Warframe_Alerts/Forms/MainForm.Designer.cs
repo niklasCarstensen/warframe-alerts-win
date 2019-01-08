@@ -59,6 +59,7 @@ namespace Warframe_Alerts
             this.label2 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
+            this.GUItimerUpdateTimer = new System.Windows.Forms.Timer(this.components);
             this.Menu_Strip.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -100,7 +101,6 @@ namespace Warframe_Alerts
             this.InvasionData.MouseLocation = new System.Drawing.Point(-1, -1);
             this.InvasionData.MouseState = MaterialSkin.MouseState.OUT;
             this.InvasionData.Name = "InvasionData";
-            this.InvasionData.OwnerDraw = true;
             this.InvasionData.Size = new System.Drawing.Size(705, 170);
             this.InvasionData.TabIndex = 10;
             this.InvasionData.UseCompatibleStateImageBehavior = false;
@@ -362,6 +362,11 @@ namespace Warframe_Alerts
             this.label4.TabIndex = 29;
             this.label4.Text = "4tuna";
             // 
+            // GUItimerUpdateTimer
+            // 
+            this.GUItimerUpdateTimer.Interval = 1000;
+            this.GUItimerUpdateTimer.Tick += new System.EventHandler(this.GUIupdateTimer_Tick);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
@@ -425,6 +430,7 @@ namespace Warframe_Alerts
         private Label label2;
         private Label label3;
         private Label label4;
+        private Timer GUItimerUpdateTimer;
     }
 }
 

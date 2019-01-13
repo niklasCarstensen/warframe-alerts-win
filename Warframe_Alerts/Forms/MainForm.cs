@@ -118,14 +118,19 @@ namespace Warframe_Alerts
                 if (!config.Data.VoidTraderArrived && WarframeHandler.worldState.WS_VoidTrader.Inventory.Count != 0)
                 {
                     string items = "";
+                    string interrestingItems = "";
                     foreach (VoidTraderItem item in WarframeHandler.worldState.WS_VoidTrader.Inventory)
                     {
-                        items += "[" + item.Item + "](" + "https://warframe.fandom.com/wiki/Special:Search?query=" + WebUtility.UrlEncode(item.Item) + ")" + " " + item.Credits + "c " + item.Ducats + "D\n";
+                        if (FilterRewards(item.Item))
+                            interrestingItems += item.Item + " - " + item.Credits + "c " + item.Ducats + "D\n";
+                        items += item.Item + " _ " + item.Credits + "c " + item.Ducats + "D\n";
                     }
-                    string message = "Void trader arrived at " + WarframeHandler.worldState.WS_VoidTrader.Location + " with: \n" + items + "\nHe will leave again at " + WarframeHandler.worldState.WS_VoidTrader.EndTime;
-                    Notify("Void-Trader", message, 1000);
+                    
+                    Notify("Void-Trader", "Void trader arrived at " + WarframeHandler.worldState.WS_VoidTrader.Location + " with: \n" +
+                        (interrestingItems == "" ? "Primed Disappointment" : interrestingItems) + "\nHe will leave again at " + WarframeHandler.worldState.WS_VoidTrader.EndTime, 1000);
 #if !DEBUG
-                    client.setMessage("Void-Traderↅ" + message);
+                    client.setMessage("Void-Traderↅ" + "Void trader arrived at " + WarframeHandler.worldState.WS_VoidTrader.Location + " with: \n" +
+                        items + "\nHe will leave again at " + WarframeHandler.worldState.WS_VoidTrader.EndTime);
 #endif
                 }
                 config.Data.VoidTraderArrived = WarframeHandler.worldState.WS_VoidTrader.Inventory.Count != 0;
@@ -239,7 +244,7 @@ namespace Warframe_Alerts
                             new Updater(i => AlertData.Items[i].SubItems[3].Text = (a.EndTime.ToLocalTime() - DateTime.Now).ToReadable() + " ▾")));
                     }
 
-                    Invasion[] invasions = WarframeHandler.worldState.WS_Invasions.OrderBy(x => -Math.Abs(x.Completion - 50)).Where(x => x.IsCompleted).ToArray();
+                    Invasion[] invasions = WarframeHandler.worldState.WS_Invasions.OrderBy(x => -Math.Abs(x.Completion - 50)).ToArray();
                     foreach (Invasion inv in invasions)
                     {
                         InvasionData.Items.Add(new ListViewItem(new string[] { inv.ToTitle(), Math.Round(inv.Completion, 2) + "%",

@@ -9,6 +9,7 @@ namespace WarframeNET
         public bool IsDay { get; set; }
         public string TimeLeft { get; set; }
         public bool IsCetus { get; set; }
+        public string ShortString { get; set; }
 
         public string TimeOfDay()
         {

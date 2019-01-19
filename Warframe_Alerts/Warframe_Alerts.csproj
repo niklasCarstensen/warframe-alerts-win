@@ -147,6 +147,7 @@
     <Compile Include="WarframeObjects\SyndicateMission.cs" />
     <Compile Include="WarframeObjects\VoidTrader.cs" />
     <Compile Include="WarframeObjects\WorldState.cs" />
+    <Compile Include="WarframeObjects\FortunaCycle.cs" />
     <Compile Include="XML\config.cs" />
     <Compile Include="XML\configData.cs" />
     <EmbeddedResource Include="Forms\MainForm.resx">

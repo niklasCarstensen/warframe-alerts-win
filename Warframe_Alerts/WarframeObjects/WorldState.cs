@@ -116,7 +116,12 @@ namespace WarframeNET
         [JsonProperty("cetusCycle")]
         public CetusCycle WS_CetusCycle { get; set; }
 
-
+        /// <summary>
+        /// Current Fortuna Cycle Data.
+        /// </summary>
+        [JsonProperty("vallisCycle")]
+        public FortunaCycle WS_FortunaCycle { get; set; }
+        
         internal WorldState() { }
     }
 }

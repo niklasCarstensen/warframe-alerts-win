@@ -166,10 +166,10 @@ namespace Warframe_Alerts
                         remotingMessage += message;
                     }
                 foreach (Invasion i in WarframeHandler.worldState.WS_Invasions)
-                    if (!config.Data.idList.Contains(i.Id))
+                    if (!config.Data.idList.Contains(i.Id) && !i.IsCompleted)
                     {
                         config.Data.idList.Add(i.Id);
-                        if (!i.IsCompleted && FilterRewards(i.AttackerReward.ToTitle() + i.DefenderReward.ToTitle()))
+                        if (FilterRewards(i.AttackerReward.ToTitle() + i.DefenderReward.ToTitle()))
                             notification += i.ToTitle() + "\n";
                         remotingMessage += i.ToTitle() + "\n";
                     }
@@ -181,7 +181,7 @@ namespace Warframe_Alerts
                     client.setMessage("Updateↅ" + remotingMessage);
 #endif
 
-                while (config.Data.idList.Count > 50)
+                while (config.Data.idList.Count > 150)
                     config.Data.idList.RemoveAt(0);
 
                 UpdateGUI();
@@ -230,6 +230,11 @@ namespace Warframe_Alerts
         }
         void UpdateGUI()
         {
+            lock (TimerUpdates)
+            {
+                TimerUpdates.Clear();
+            }
+
             this.InvokeIfRequired(() => {
                 try {
                     var views = Controls.OfType<MaterialListView>();
@@ -244,7 +249,7 @@ namespace Warframe_Alerts
                             new Updater(i => AlertData.Items[i].SubItems[3].Text = (a.EndTime.ToLocalTime() - DateTime.Now).ToReadable() + " ▾")));
                     }
 
-                    Invasion[] invasions = WarframeHandler.worldState.WS_Invasions.OrderBy(x => -Math.Abs(x.Completion - 50)).ToArray();
+                    Invasion[] invasions = WarframeHandler.worldState.WS_Invasions.OrderBy(x => -Math.Abs(x.Completion - 50)).Where(x => !x.IsCompleted).ToArray();
                     foreach (Invasion inv in invasions)
                     {
                         InvasionData.Items.Add(new ListViewItem(new string[] { inv.ToTitle(), Math.Round(inv.Completion, 2) + "%",
@@ -271,7 +276,9 @@ namespace Warframe_Alerts
 
                     // Cetus
                     SyndicateMission ostrons = WarframeHandler.worldState.WS_SyndicateMissions.Find(x => x.Syndicate == "Ostrons");
-                    Tabs[2].Items.Add(new ListViewItem(new string[] { "Changes at " + ostrons.EndTime.ToLocalTime().ToLongTimeString() }));
+                    Tabs[2].Items.Add(new ListViewItem(new string[] { "" }));
+                    TimerUpdates.Add(new Tuple<int, Updater>(0, new Updater(i => Tabs[2].Items[i].SubItems[0].Text = "Changes at " + ostrons.EndTime.ToLocalTime().ToLongTimeString() +
+                        " - " + WarframeHandler.worldState.WS_CetusCycle.TimeOfDay() + " " + (WarframeHandler.worldState.WS_CetusCycle.Expiry.ToLocalTime() - DateTime.Now).ToReadable())));
                     for (int j = 0; j < ostrons.jobs.Count; j++)
                     {
                         SyndicateJob job = ostrons.jobs[j];
@@ -284,7 +291,9 @@ namespace Warframe_Alerts
 
                     // 4tuna
                     SyndicateMission tuna = WarframeHandler.worldState.WS_SyndicateMissions.Find(x => x.Syndicate == "Solaris United");
-                    Tabs[3].Items.Add(new ListViewItem(new string[] { "Changes at " + tuna.EndTime.ToLocalTime().ToLongTimeString() }));
+                    Tabs[3].Items.Add(new ListViewItem(new string[] { "" }));
+                    TimerUpdates.Add(new Tuple<int, Updater>(0, new Updater(i => Tabs[3].Items[i].SubItems[0].Text = "Changes at " + tuna.EndTime.ToLocalTime().ToLongTimeString() +
+                        " - " + WarframeHandler.worldState.WS_FortunaCycle.Temerature() + " " + (WarframeHandler.worldState.WS_FortunaCycle.Expiry.ToLocalTime() - DateTime.Now).ToReadable())));
                     for (int j = 0; j < tuna.jobs.Count; j++)
                     {
                         SyndicateJob job = tuna.jobs[j];
@@ -304,15 +313,18 @@ namespace Warframe_Alerts
         {
             if (windowVisible)
             {
-                this.InvokeIfRequired(() =>
+                lock (TimerUpdates)
                 {
-                    foreach (Tuple<int, Updater> a in TimerUpdates)
-                        try
-                        {
-                            a.Item2.Invoke(a.Item1);
-                        }
-                        catch { }
-                });
+                    this.InvokeIfRequired(() =>
+                    {
+                        foreach (Tuple<int, Updater> a in TimerUpdates)
+                            try
+                            {
+                                a.Item2.Invoke(a.Item1);
+                            }
+                            catch { }
+                    });
+                }
             }
         }
 

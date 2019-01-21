@@ -179,9 +179,15 @@ namespace Warframe_Alerts
 #if !DEBUG
                 if (!string.IsNullOrWhiteSpace(remotingMessage))
                     client.setMessage("Updateↅ" + remotingMessage);
+                client.setMessage("StateↅUpdated at: " + DateTime.Now.ToLongTimeString() + "\n\n" +
+                    "Cetus: " + WarframeHandler.worldState.WS_CetusCycle.TimeOfDay() + " " + (WarframeHandler.worldState.WS_CetusCycle.Expiry.ToLocalTime() - DateTime.Now).ToReadable() + "\n" +
+                    "Fortuna: " + WarframeHandler.worldState.WS_FortunaCycle.Temerature() + " " + (WarframeHandler.worldState.WS_FortunaCycle.Expiry.ToLocalTime() - DateTime.Now).ToReadable() + "\n" +
+                    "\nFissures:\n" +
+                    WarframeHandler.worldState.WS_Fissures.OrderBy(x => x.TierNumber).Select(f => f.Tier + " - " + f.MissionType + " - " + (f.EndTime.ToLocalTime() - DateTime.Now).ToReadable())
+                                                                                     .Aggregate((x, y) => x + "\n" + y));
 #endif
 
-                while (config.Data.idList.Count > 150)
+                while (config.Data.idList.Count > 250)
                     config.Data.idList.RemoveAt(0);
 
                 UpdateGUI();

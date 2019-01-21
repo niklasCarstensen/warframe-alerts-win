@@ -39,12 +39,15 @@ namespace RemotableObjects
                 {
                     try
                     {
-                        remoteObject.SetMessage(ltext);
-                        worked = true;
+                        lock (remoteObject)
+                        {
+                            remoteObject.SetMessage(ltext);
+                            worked = true;
+                        }
                     }
                     catch
                     {
-                        Thread.Sleep(50);
+                        Thread.Sleep(500);
                     }
                 }
             }));

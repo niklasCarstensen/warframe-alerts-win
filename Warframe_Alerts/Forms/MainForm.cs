@@ -95,8 +95,9 @@ namespace Warframe_Alerts
             if (config.Data.startMinimized)
                 Task.Factory.StartNew(() => { this.InvokeIfRequired(() => { HideForm(); }); });
 
-            //client.setMessage("Updateↅsorry fam one more fieldron time solaris\nOwO nitain no not really");
-            //config.Data.idList.Clear();
+            IEnumerable<MaterialListView> views = Controls.OfType<MaterialListView>();
+            foreach (MaterialListView view in views)
+                view.ColumnWidthChanging += new ColumnWidthChangingEventHandler(StopColumnWidthChanging);
         }
         
         // Update
@@ -258,10 +259,10 @@ namespace Warframe_Alerts
                     Invasion[] invasions = WarframeHandler.worldState.WS_Invasions.OrderBy(x => -Math.Abs(x.Completion - 50)).Where(x => !x.IsCompleted).ToArray();
                     foreach (Invasion inv in invasions)
                     {
-                        InvasionData.Items.Add(new ListViewItem(new string[] { inv.ToTitle(), Math.Round(inv.Completion, 2) + "%",
+                        InvasionData.Items.Add(new ListViewItem(new string[] { "", inv.ToTitle(), Math.Round(inv.Completion, 2) + "%",
                             (DateTime.Now - inv.StartTime.ToLocalTime()).ToReadable() + " ▴" }));
                         TimerUpdates.Add(new Tuple<int, Updater>(InvasionData.Items.Count - 1,
-                            new Updater(j => InvasionData.Items[j].SubItems[2].Text = (DateTime.Now - inv.StartTime.ToLocalTime()).ToReadable() + " ▴")));
+                            new Updater(j => InvasionData.Items[j].SubItems[3].Text = (DateTime.Now - inv.StartTime.ToLocalTime()).ToReadable() + " ▴")));
                     }
 
                     IOrderedEnumerable<Fissure> fissures = WarframeHandler.worldState.WS_Fissures.OrderBy(x => x.TierNumber);
@@ -387,6 +388,14 @@ namespace Warframe_Alerts
         private void GUIupdateTimer_Tick(object sender, EventArgs e)
         {
             UpdateGUITimers();
+        }
+        private void StopColumnWidthChanging(object sender, ColumnWidthChangingEventArgs e)
+        {
+            if (sender.GetType() == typeof(MaterialListView))
+            {
+                e.Cancel = true;
+                e.NewWidth = (sender as MaterialListView).Columns[e.ColumnIndex].Width;
+            }
         }
 
         // Other

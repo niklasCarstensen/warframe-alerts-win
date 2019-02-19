@@ -37,9 +37,10 @@ namespace Warframe_Alerts
             this.Menu_Strip = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.Menu_Exit = new System.Windows.Forms.ToolStripMenuItem();
             this.InvasionData = new MaterialSkin.Controls.MaterialListView();
-            this.columnHeader5 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.columnHeader6 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.columnHeader7 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.fixHeader = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.TitleHeader = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.CompletionHeader = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.ActiveForHeader = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.MBtnSettings = new MaterialSkin.Controls.MaterialFlatButton();
             this.MBtnUpdate = new MaterialSkin.Controls.MaterialFlatButton();
             this.MBtnExit = new MaterialSkin.Controls.MaterialFlatButton();
@@ -90,9 +91,10 @@ namespace Warframe_Alerts
             // 
             this.InvasionData.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.InvasionData.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
-            this.columnHeader5,
-            this.columnHeader6,
-            this.columnHeader7});
+            this.fixHeader,
+            this.TitleHeader,
+            this.CompletionHeader,
+            this.ActiveForHeader});
             this.InvasionData.Depth = 0;
             this.InvasionData.Font = new System.Drawing.Font("Roboto", 32F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.World);
             this.InvasionData.FullRowSelect = true;
@@ -101,25 +103,30 @@ namespace Warframe_Alerts
             this.InvasionData.MouseLocation = new System.Drawing.Point(-1, -1);
             this.InvasionData.MouseState = MaterialSkin.MouseState.OUT;
             this.InvasionData.Name = "InvasionData";
+            this.InvasionData.OwnerDraw = true;
             this.InvasionData.Size = new System.Drawing.Size(705, 170);
             this.InvasionData.TabIndex = 10;
             this.InvasionData.UseCompatibleStateImageBehavior = false;
             this.InvasionData.View = System.Windows.Forms.View.Details;
             // 
-            // columnHeader5
+            // fixHeader
             // 
-            this.columnHeader5.Text = "Title";
-            this.columnHeader5.Width = 460;
+            this.fixHeader.Width = 0;
             // 
-            // columnHeader6
+            // TitleHeader
             // 
-            this.columnHeader6.Text = "Completion";
-            this.columnHeader6.Width = 100;
+            this.TitleHeader.Text = "Title";
+            this.TitleHeader.Width = 460;
             // 
-            // columnHeader7
+            // CompletionHeader
             // 
-            this.columnHeader7.Text = "Active for";
-            this.columnHeader7.Width = 200;
+            this.CompletionHeader.Text = "Completion";
+            this.CompletionHeader.Width = 100;
+            // 
+            // ActiveForHeader
+            // 
+            this.ActiveForHeader.Text = "Active for";
+            this.ActiveForHeader.Width = 200;
             // 
             // MBtnSettings
             // 
@@ -408,9 +415,9 @@ namespace Warframe_Alerts
         private ContextMenuStrip Menu_Strip;
         private ToolStripMenuItem Menu_Exit;
         private MaterialSkin.Controls.MaterialListView InvasionData;
-        private ColumnHeader columnHeader5;
-        private ColumnHeader columnHeader6;
-        private ColumnHeader columnHeader7;
+        private ColumnHeader TitleHeader;
+        private ColumnHeader CompletionHeader;
+        private ColumnHeader ActiveForHeader;
         private MaterialSkin.Controls.MaterialFlatButton MBtnSettings;
         private MaterialSkin.Controls.MaterialFlatButton MBtnUpdate;
         private MaterialSkin.Controls.MaterialFlatButton MBtnExit;
@@ -431,6 +438,7 @@ namespace Warframe_Alerts
         private Label label3;
         private Label label4;
         private Timer GUItimerUpdateTimer;
+        private ColumnHeader fixHeader;
     }
 }
 
